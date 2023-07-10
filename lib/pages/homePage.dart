@@ -156,9 +156,11 @@ class HomePageState extends BaseState<HomePage, HomePresenter>
     if(args != null){
       widget.isLoaded = args['isLoaded'];
       String tempMsg = args['advoceMsg'];
-      tempMsg.split('\\n').forEach((element) {
-        advoceMsg += element + '\n';
-      });
+      if(tempMsg != null){
+        tempMsg.split('\\n').forEach((element) {
+          advoceMsg += element + '\n';
+        });
+      }
     }
 
     Widget currentPage;

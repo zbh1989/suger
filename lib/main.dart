@@ -149,7 +149,7 @@ class SplashScreenState extends BaseState<SplashScreen,SplashScreenPresenter> {
       body = ConstrainedBox(
         constraints: BoxConstraints.expand(),
         child: Container(
-          child: SwiperPage(imgList:dataList,width: MediaQuery.of(context).size.width,height: MediaQuery.of(context).size.height,),
+          child: SwiperPage(imgList:dataList,width: MediaQuery.of(context).size.width,height: MediaQuery.of(context).size.height,needFullScreen: true,),
         ),
       );
     }

@@ -15,7 +15,7 @@ class PreferenceUtils {
     return _instance;
   }
 
-  saveInteger(String key, int value) => SharedPreferences.getInstance().then((sp) => sp.setInt(key, value));
+  saveInteger(String key, int value) => SharedPreferences.getInstance().then((sp) => {if(sp != null && value != null){sp.setInt(key, value)}});
 
   saveString(String key, String value) => SharedPreferences.getInstance().then((sp) => sp.setString(key, value));
 

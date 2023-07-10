@@ -11,9 +11,11 @@ class SwiperPage extends StatefulWidget {
 
   final double height;
 
+  final bool needFullScreen;
+
   List imgList = [];
 
-  SwiperPage({this.width,this.height,this.imgList,});
+  SwiperPage({this.width,this.height,this.imgList,this.needFullScreen:false,});
 
   @override
   SwiperPageState createState() => SwiperPageState();
@@ -47,18 +49,18 @@ class SwiperPageState extends BaseState<SwiperPage,SwiperPagePresenter> {
     }
 
     return Container(
-        margin: EdgeInsets.only(top: 16,bottom: 16,left: 20,right: 20,),
+        margin: widget.needFullScreen ? EdgeInsets.only(top: 0,bottom: 0,left: 0,right: 0,) : EdgeInsets.only(top: 16,bottom: 16,left: 20,right: 20,),
         width: widget.width ?? MediaQuery.of(context).size.width - 40,
         height: widget.height ?? (MediaQuery.of(context).size.width - 40)*9/16,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: widget.needFullScreen ? BorderRadius.circular(0) : BorderRadius.circular(16),
         ),
         child: Swiper(
           itemBuilder: (BuildContext context, int index) {
             return Container(
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: widget.needFullScreen ? BorderRadius.circular(0) : BorderRadius.circular(20),
               ),
               child: Image.network(
                 widget.imgList[index]["img"],

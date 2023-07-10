@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:device_info/device_info.dart';
 import 'package:dio/dio.dart';
 import 'package:caihong_app/network/exception/error_status.dart';
@@ -144,7 +146,7 @@ class BasePresenter<V extends IBaseView> {
   }
 
   /// 自动注册登录
-  Future<void> autoLogin() async {
+  Future autoLogin({Function callback}) {
     Future<String> result = _deviceDetails();
 
     result.then((value) async {
@@ -156,29 +158,33 @@ class BasePresenter<V extends IBaseView> {
         queryParams["imei"] = imei;
         queryParams["cno"] = Api.cno;
         await requestFutureData<String>(Method.post,
-            url: Api.HOST_URL + Api.LOGIN,
-            queryParams: queryParams, onSuccess: (data) {
-              Map<String, dynamic> map = parseData(data);
-              // Map userInfo = map['data']['data'];
-              Map userInfo = map['data'];
-              if (userInfo != null) {
-                PreferenceUtils.instance.saveString("userId", userInfo['id']);
-                PreferenceUtils.instance.saveString("imei", imei);
-                PreferenceUtils.instance.saveString("login_status", "1"); // 登录状态 1：登录成功， 0： 失败
-                PreferenceUtils.instance.saveInteger("cronNum", userInfo['cronNum']); // 砖石 或者 金币数量
-                PreferenceUtils.instance.saveInteger("vipStatus", userInfo['vipStatus']); // 是否是vip; 1: 是; 0 不是
-                PreferenceUtils.instance.saveString("spreadCode", userInfo['spreadCode']); // 推广码
-                PreferenceUtils.instance.saveInteger("spreadNum", userInfo['spreadNum'] == null ? 0 : userInfo['spreadNum']); // 推广码
-                PreferenceUtils.instance.saveInteger("tmpViewNum", userInfo['tmpViewNum']); // 观影券
-                PreferenceUtils.instance.saveInteger("checkNum", userInfo['checkNum']); // 连续签到天数
-                PreferenceUtils.instance.saveInteger("endVipDateNum", userInfo['endVipDateNum']); // 剩余VIP天数
-
-              } else {
-                print('用户登录失败.');
+          url: Api.HOST_URL + Api.LOGIN,
+          queryParams: queryParams,
+          onSuccess: (data) {
+            Map<String, dynamic> map = parseData(data);
+            // Map userInfo = map['data']['data'];
+            Map userInfo = map['data'];
+            if (userInfo != null) {
+              PreferenceUtils.instance.saveString("userId", userInfo['id']);
+              PreferenceUtils.instance.saveString("imei", imei);
+              PreferenceUtils.instance.saveString("login_status", "1"); // 登录状态 1：登录成功， 0： 失败
+              PreferenceUtils.instance.saveInteger("cronNum", userInfo['cronNum']); // 砖石 或者 金币数量
+              PreferenceUtils.instance.saveInteger("vipStatus", userInfo['vipStatus']); // 是否是vip; 1: 是; 0 不是
+              PreferenceUtils.instance.saveString("spreadCode", userInfo['spreadCode']); // 推广码
+              PreferenceUtils.instance.saveInteger("spreadNum", userInfo['spreadNum'] == null ? 0 : userInfo['spreadNum']); // 推广码
+              PreferenceUtils.instance.saveInteger("tmpViewNum", userInfo['tmpViewNum']); // 观影券
+              PreferenceUtils.instance.saveInteger("checkNum", userInfo['checkNum']); // 连续签到天数
+              PreferenceUtils.instance.saveInteger("endVipDateNum", userInfo['endVipDateNum']); // 剩余VIP天数
+              if(callback != null) {
+                callback();
               }
-            }, onError: (code, msg) {
-              view.closeProgress();
-            });
+            } else {
+              print('用户登录失败.');
+            }
+          }, onError: (code, msg) {
+            print('用户登录异常：$msg');
+            view.closeProgress();
+          });
       }
     });
   }

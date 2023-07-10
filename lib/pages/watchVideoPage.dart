@@ -128,7 +128,7 @@ class WatchVideoPageState extends BaseState<WatchVideoPage,WatchVideoPagePresent
 
     if(widget.showLevel == 1){ /// 免费
       hasPermission = true;
-      player.setDataSource(widget.videoUrl ?? widget.videoUrl,autoPlay: true,showCover: true);
+      player.setDataSource(widget.videoUrl,autoPlay: true,showCover: true);
     }else{
       if(widget.showLevel == 2){ /// 金币
         /// 购买视频
@@ -138,7 +138,7 @@ class WatchVideoPageState extends BaseState<WatchVideoPage,WatchVideoPagePresent
           if(vipStatus == 1){
             setState(() {
               hasPermission = true;
-              player.setDataSource(widget.videoUrl ?? widget.videoUrl,autoPlay: true,showCover: true);
+              player.setDataSource(widget.videoUrl,autoPlay: true,showCover: true);
             });
           }else{
             setState(() {
@@ -148,8 +148,10 @@ class WatchVideoPageState extends BaseState<WatchVideoPage,WatchVideoPagePresent
               }else if(baseVideoStartTime !=null && baseVideoStartTime > 0){
                 seekTime = baseVideoStartTime;
               }
-              player.setOption(FijkOption.playerCategory, "seek-at-start", seekTime*1000);
-              player.setDataSource(widget.videoUrl ?? widget.videoUrl,autoPlay: true,showCover: true);
+              if(seekTime > 0){
+                player.setOption(FijkOption.playerCategory, "seek-at-start", seekTime*1000);
+              }
+              player.setDataSource(widget.videoUrl,autoPlay: true,showCover: true);
             });
           }
         });

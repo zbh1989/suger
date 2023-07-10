@@ -314,7 +314,6 @@ class _CustomFijkPanelState extends State<CustomFijkPanel> {
 
     if(player.state == FijkState.prepared){
       if(!widget.hasPermission){
-        player.pause();
         if(widget.videoStartTime >= 0 && widget.videoEndTime > 0){
           defaultEndTime = widget.videoEndTime;
         }else if(widget.baseVideoStartTime >= 0 && widget.baseVideoEndTime > 0){

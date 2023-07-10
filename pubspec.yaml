@@ -301,6 +301,7 @@ flutter:
     - lib/assets/images/share/wangzherongyao.png
     - lib/assets/images/share/wechat.png
     - lib/assets/images/share/zhihu.png
+    - lib/assets/images/video_pause.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
