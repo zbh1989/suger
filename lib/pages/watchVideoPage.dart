@@ -7,6 +7,7 @@ import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart' as fluttertoast;
 import '../base/view/base_state.dart';
 import '../presenter/watchVideoPagePresenter.dart';
 import '../utils/PreferenceUtils.dart';
@@ -20,6 +21,7 @@ import '../views/videoOperation.dart';
 import 'buyVipPage.dart';
 import 'homePage.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import '../utils/toast.dart';
 
 class WatchVideoPage extends StatefulWidget {
 
@@ -176,9 +178,9 @@ class WatchVideoPageState extends BaseState<WatchVideoPage,WatchVideoPagePresent
 
         if(res){
           if(buyOrNot == 1){
-            Toast.tips('你已购买过该视频，请观看');
+            Toast.tips('你已购买过该视频，请观看',position: fluttertoast.ToastGravity.TOP);
           }else{
-            Toast.tips('扣除金币 ${widget.gold} 成功');
+            Toast.tips('扣除金币 ${widget.gold} 成功',position: fluttertoast.ToastGravity.TOP);
           }
 
         }else{

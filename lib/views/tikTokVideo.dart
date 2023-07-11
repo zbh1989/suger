@@ -72,6 +72,9 @@ class TikTokVideoPageState extends State<TikTokVideoPage> {
 
   bool _pauseOrStart = true;
 
+  /// 是否加载背景图
+  bool isLoadBackground = true;
+
   @override
   void initState(){
     super.initState();
@@ -96,25 +99,26 @@ class TikTokVideoPageState extends State<TikTokVideoPage> {
 
     /// 接收流
     _currentPosSubs = player.onCurrentPosUpdate.listen((v) {
-      currentDuration = v.toString().substring(0,v.toString().indexOf("."));
-      // 获取播放秒数
-      String second = currentDuration.split(":")[2];
-      if(double.parse(second) == defaultVideoEndTime && !isShowDialog){
-        /// 播放状态
-        if (player.value.state == FijkState.started){
-          setState(() {
+      setState((){
+        isLoadBackground = false;
+        currentDuration = v.toString().substring(0,v.toString().indexOf("."));
+        // 获取播放秒数
+        String second = currentDuration.split(":")[2];
+        if(double.parse(second) == defaultVideoEndTime && !isShowDialog){
+          /// 播放状态
+          if (player.value.state == FijkState.started){
             player.pause();
             _pauseOrStart = false;
             isShowDialog = true;
             showTime++;
-          });
+          }
         }
-      }
 
-      if (isShowDialog && showTime == 1){
-        getShowDialog(context);
-        showTime++;
-      }
+        if (isShowDialog && showTime == 1){
+          getShowDialog(context);
+          showTime++;
+        }
+      });
 
     });
   }
@@ -215,6 +219,20 @@ class TikTokVideoPageState extends State<TikTokVideoPage> {
                   ),
                   child: Image.asset('lib/assets/images/video_pause.png',width: 40,height: 40,),
                 ),
+              ),
+            ),
+          ),
+
+          /// 加载背景图
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            child: Center(
+              child: Opacity(
+                opacity: isLoadBackground ? 0.4 : 0.0,
+                child: Image.asset('lib/assets/images/logo.png',width: 180,height: 180,),
               ),
             ),
           ),

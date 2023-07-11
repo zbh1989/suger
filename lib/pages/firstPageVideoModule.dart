@@ -61,7 +61,6 @@ class FirtPageVideoModuleState extends BaseState<FirstPageVideoModule,FirstPageV
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -91,20 +90,6 @@ class FirtPageVideoModuleState extends BaseState<FirstPageVideoModule,FirstPageV
       ),
     );
 
-    /*return FutureBuilder(
-      future: requestData(),
-      builder: (context, snapshot){
-        if(snapshot.hasData){
-          buildViews(context);
-          return Column(
-            children:videoList.length > 0 ? videoList : [],
-          );
-        }else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
-        }
-        return const CircularProgressIndicator();
-      },
-    );*/
   }
 
 
