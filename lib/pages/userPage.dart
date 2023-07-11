@@ -4,11 +4,14 @@ import 'package:caihong_app/pages/myCollection.dart';
 import 'package:caihong_app/pages/sharePage.dart';
 import 'package:caihong_app/presenter/user_presenter.dart';
 import 'package:caihong_app/style/style.dart';
+import 'package:caihong_app/views/inviteCodePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import '../network/api/network_api.dart';
 import '../utils/PreferenceUtils.dart';
+import '../utils/alertDialogUtil.dart';
+import '../utils/dialogUtil.dart';
 import '../views/tiktokTabBar.dart';
 import '../views/versionInfo.dart';
 import 'blankPage.dart';
@@ -464,8 +467,8 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
         child: Divider(height: 1.0,indent: 0.0,color: Color(0x33FFFFFF),),
       ),
       GestureDetector(
-        onTap: (){
-          Navigator.of(context).push(MaterialPageRoute(builder:(ctx)=>Blank()));
+        onTap: () async {
+          Navigator.of(context).push(MaterialPageRoute(builder:(ctx)=>InviteCodePage()));
         },
         child: ListTile(
           leading: Image.asset('lib/assets/images/invite_num.png',width: 24,height: 24,),

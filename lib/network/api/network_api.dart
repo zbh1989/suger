@@ -94,6 +94,9 @@ class Api {
   /// 金币等级
   static const String GOLD_LIST_QUERY = "api/level/goldList";
 
+  /// 绑定邀请码
+  static const String BIND_INVITE_CODE = "api/user/bindPromCode";
+
   static const String API_URL = "";
 
 }

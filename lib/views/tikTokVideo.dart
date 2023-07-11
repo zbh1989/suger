@@ -70,6 +70,8 @@ class TikTokVideoPageState extends State<TikTokVideoPage> {
 
   int defaultVideoEndTime = 30;
 
+  bool _pauseOrStart = true;
+
   @override
   void initState(){
     super.initState();
@@ -79,7 +81,7 @@ class TikTokVideoPageState extends State<TikTokVideoPage> {
     // 设置播放视频地址，非自动播放，渲染视频第一帧
     player.setDataSource(widget.videoInfo['playPath'],autoPlay: true,showCover: true,);
     if(widget.videoStartTime != null && widget.videoStartTime > 0 && widget.videoEndTime != null && widget.videoEndTime > 0){
-      player.seekTo(widget.videoStartTime*1000);
+      player.setOption(FijkOption.playerCategory, "seek-at-start", widget.videoStartTime*1000);
       defaultVideoEndTime = widget.videoEndTime;
     }else{
       player.seekTo(135*1000);
@@ -149,9 +151,11 @@ class TikTokVideoPageState extends State<TikTokVideoPage> {
     Widget videoContainer = TikTokVideoGesture(
       onAddFavorite: widget.onAddFavorite,
       onSingleTap: () async {
+        _pauseOrStart = !_pauseOrStart;
         if (isShowDialog){
           if (player.state == FijkState.started) {
             player.pause();
+            _pauseOrStart = true;
           }
           getShowDialog(context);
 
@@ -187,6 +191,29 @@ class TikTokVideoPageState extends State<TikTokVideoPage> {
               ),
             ),
           ),
+
+
+          /// 暂停按钮
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            child: Offstage(
+              offstage: _pauseOrStart,
+              child: Center(
+                child: Container(
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(0, 0, 0, 0.5),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Image.asset('lib/assets/images/video_pause.png',width: 40,height: 40,),
+                ),
+              ),
+            ),
+          ),
+
           // TODO:状态问题
           // hidePauseIcon
           //     ? Container()
