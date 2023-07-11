@@ -40,7 +40,7 @@ class TitlePageState extends BaseState <TitlePage,TitlePagePresenter>  with Widg
   @override
   void initState(){
 
-    requestData();
+    // requestData();
 
     //必须在组件挂载运行的第一帧后执行，否则 _refreshKey 还没有与组件状态关联起来
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -58,9 +58,9 @@ class TitlePageState extends BaseState <TitlePage,TitlePagePresenter>  with Widg
 
   void refreshPage(List list){
     if(list != null && list.length > 0){
+      titleList.clear();
       if(mounted){
         setState(() {
-
           titleList.addAll(list);
         });
       }
@@ -69,7 +69,22 @@ class TitlePageState extends BaseState <TitlePage,TitlePagePresenter>  with Widg
 
   @override
   Widget build(BuildContext context) {
-    return titleList.length > 0 ?
+    return RefreshIndicator(
+      key: _refreshKey,    //自定义 key，需要通过 key 获取到对应的 State
+      onRefresh: requestData,
+      child: ListView.builder(
+          shrinkWrap:true,//范围内进行包裹（内容多高ListView就多高）
+          physics:NeverScrollableScrollPhysics(),//禁止滚动
+          itemCount:titleList.length,
+          itemBuilder:(context,index){
+            var title = titleList[index];
+            int limit = title['type'] == 1 ? 5 : 6;
+            Widget pageVideoModule = FirstPageVideoModule(topicId:title['id'],topicImg: title['image'],topic:title['name'],showType:title['type'],pageNum:Constant.first_page_num,limit: limit,);
+            return pageVideoModule;
+          }
+      ),
+    );
+    /*return titleList.length > 0 ?
           RefreshIndicator(
             key: _refreshKey,    //自定义 key，需要通过 key 获取到对应的 State
             onRefresh: requestData,
@@ -85,7 +100,7 @@ class TitlePageState extends BaseState <TitlePage,TitlePagePresenter>  with Widg
                 }
             ),
           )
-        : Container();
+        : Container();*/
   }
 
   @override

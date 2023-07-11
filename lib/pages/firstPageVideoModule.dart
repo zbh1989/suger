@@ -110,7 +110,7 @@ class FirtPageVideoModuleState extends BaseState<FirstPageVideoModule,FirstPageV
 
 
   void buildViews(BuildContext context){
-
+    videoList.clear();
     print('开始构建$topic模块 $pageNum');
     final size =MediaQuery.of(context).size;
     final width = min(size.width,size.height);
@@ -280,7 +280,7 @@ class FirtPageVideoModuleState extends BaseState<FirstPageVideoModule,FirstPageV
   // 构建一行视图
   Widget buildRow(List list,bool isMain){ // 横着放大图片，只有showType = 1 为true，其他false
     final size =MediaQuery.of(context).size;
-    final width =size.width;
+    final width =min(size.width,size.height);
     double imgWidth = (width - 55)/2;  // 横着放图片宽度
     double imgHeight = imgWidth * 9 / 16; // 按照间距 和 宽高比例计算
     double bigImgWidth = width - 40;// 横着放，上面的图片要大图片

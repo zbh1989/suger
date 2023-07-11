@@ -169,6 +169,7 @@ class NewFirstPageState extends BaseState<NewFirstPage,NewFirstPagePresenter>  w
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     list.clear();
 
     // 搜索框 充值按钮 签到按钮

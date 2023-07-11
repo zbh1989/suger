@@ -74,9 +74,7 @@ class MenuTopPageState extends BaseState<MenuTopicPage,MenuTopicPagePresenter> w
   }
 
   Future<void> initVideoData() async {
-    print(1);
     mPresenter.getVideoList(widget.menuId,widget.menuName,pageNum++,14);
-    print(2);
   }
 
   void refreshVideoData(List videoList){

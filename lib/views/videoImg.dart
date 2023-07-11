@@ -41,9 +41,9 @@ class VideoImg extends StatelessWidget {
             width: imgWidth,
             height: imgHeight,
             fit: BoxFit.cover,
-            /*errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-              return Text('Your error widget...');
-            },*/
+            errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+              return Text('Your error widget...$imgWidth -- $imgHeight');
+            },
           ),
         ),
 

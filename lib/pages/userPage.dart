@@ -9,10 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import '../network/api/network_api.dart';
 import '../utils/PreferenceUtils.dart';
+import '../views/tiktokTabBar.dart';
 import '../views/versionInfo.dart';
 import 'blankPage.dart';
 import 'buyVipPage.dart';
 import 'chargePage.dart';
+import 'homePage.dart';
 import 'loginPage.dart';
 import 'myBuyVideoPage.dart';
 
@@ -556,16 +558,28 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
 
     Size size = MediaQuery.of(context).size;
 
-    return Container(
-      color: Color(0xFF060123),
-      constraints: BoxConstraints(
-        minWidth: size.width,
-        minHeight: size.height,
-      ),
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: widgetList,
+
+    return WillPopScope(
+      onWillPop: (){
+        Navigator.pushAndRemoveUntil(
+          context,
+          new MaterialPageRoute(
+              builder: (context) => new HomePage(type: TikTokPageTag.firstPage)),
+              (route) => route == null,
+        );
+        return Future(() => true);
+      },
+      child: Container(
+        color: Color(0xFF060123),
+        constraints: BoxConstraints(
+          minWidth: size.width,
+          minHeight: size.height,
+        ),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: widgetList,
+          ),
         ),
       ),
     );
@@ -573,7 +587,6 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
 
   @override
   UserPresenter createPresenter() {
-    // TODO: implement createPresenter
     return UserPresenter();
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:caihong_app/pages/chargePage.dart';
 import 'package:caihong_app/pages/showSwiperPage.dart';
 import 'package:caihong_app/utils/toast.dart';
@@ -249,12 +248,13 @@ class WatchVideoPageState extends BaseState<WatchVideoPage,WatchVideoPagePresent
               player.exitFullScreen();
               reloadData = true;
             }else{
-              Navigator.pushAndRemoveUntil(
+              Navigator.of(context).pop();
+             /* Navigator.pushAndRemoveUntil(
                 context,
                 new MaterialPageRoute(
                     builder: (context) => new HomePage(type: TikTokPageTag.firstPage)),
                     (route) => route == null,
-              );
+              );*/
             }
 
             // Navigator.pop(context); // 如果需要做拦截返回则在此判断

@@ -99,6 +99,9 @@ class _CustomFijkPanelState extends State<CustomFijkPanel> {
   /// 是否在播放
   bool _playing = false;
 
+  /// 是否显示暂停按钮
+  bool _offstage = true;
+
   /// 后台任务是否初步执行完成是用于正在加载中的状态
   bool _prepared = false;
 
@@ -366,14 +369,17 @@ class _CustomFijkPanelState extends State<CustomFijkPanel> {
       }else{
         if (_playing == true) {
           player.pause();
+          _offstage = false;
         } else {
           player.start();
+          _offstage = true;
         }
       }
     }else if(widget.showLevel == 3){  ///  vip播放
       if (isShowDialog){
         if (_playing == true) {
           player.pause();
+          _offstage = false;
         }
         if(player.value.fullScreen){
           player.exitFullScreen();
@@ -384,15 +390,19 @@ class _CustomFijkPanelState extends State<CustomFijkPanel> {
       }else{
         if (_playing == true) {
           player.pause();
+          _offstage = false;
         } else {
           player.start();
+          _offstage = true;
         }
       }
     }else{ /// 免费
       if (_playing == true) {
         player.pause();
+        _offstage = false;
       } else {
         player.start();
+        _offstage = true;
       }
     }
 
@@ -582,8 +592,8 @@ class _CustomFijkPanelState extends State<CustomFijkPanel> {
     double currentValue = getCurrentVideoValue();
     return FijkPanelCenterController(
       size: Size(double.infinity, double.infinity),
-      onTap: _cancelAndRestartTimer,
-      onDoubleTap: _playOrPause,
+      onTap: _playOrPause,
+      onDoubleTap: _cancelAndRestartTimer,
       currentTime: currentValue,
       onTapUp: (e) {
         setState(() {
@@ -591,9 +601,18 @@ class _CustomFijkPanelState extends State<CustomFijkPanel> {
           if (isShowDialog && !widget.hasPermission){
             if (_playing == true) {
               player.pause();
+              _offstage = false;
             }
             widget.noPermissionDialog();
             showTime++;
+          }else{
+            if (_playing == true) {
+              player.pause();
+              _offstage = false;
+            }else{
+              player.start();
+              _offstage = true;
+            }
           }
 
           isShowDouble = false;
@@ -684,6 +703,27 @@ class _CustomFijkPanelState extends State<CustomFijkPanel> {
               top: 0,
               bottom: 0,
               child: videoLoading,
+            ),
+
+            /// 暂停按钮
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: Offstage(
+                offstage: _offstage,
+                child: Center(
+                  child: Container(
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(0, 0, 0, 0.5),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Image.asset('lib/assets/images/video_pause.png',width: 40,height: 40,),
+                  ),
+                ),
+              ),
             ),
 
             /// 快进时间
