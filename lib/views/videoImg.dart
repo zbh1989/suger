@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import '../utils/stringUtils.dart';
 
@@ -15,6 +17,7 @@ class VideoImg extends StatelessWidget {
     this.gold : 0,
     this.desc : '',
     this.onTapPlayer,
+    this.playNum:27876
   }) : super(key: key);
   final double imgWidth;
   final double imgHeight;
@@ -24,6 +27,7 @@ class VideoImg extends StatelessWidget {
   final String desc;
   final String videoId;
   final Function onTapPlayer; // 点击播放视频回调
+  final int playNum;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +35,12 @@ class VideoImg extends StatelessWidget {
       alignment: const FractionalOffset(0.0,0.0),//0.5,0.89
       children: <Widget>[
         Container(
+          width: imgWidth,
+          height: imgHeight,
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
-            // color: Colors.red,
+            border: Border.all(width: 0,color: Color(0xFF060123)),
+            // border: BoxBorder.,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Image.network(
@@ -48,6 +55,22 @@ class VideoImg extends StatelessWidget {
         ),
 
         getShowLevelIcon(showLevel, gold),
+
+        Positioned(
+          right: 5,
+          bottom: -5,
+          child: Container(
+            height: 32,
+            padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0,3),
+            child: Row(
+              children: [
+                Icon(Icons.remove_red_eye,size: 12,color: Color(0xFFFFFFFF),),
+                SizedBox(width: 5,),
+                Text((Random().nextInt(1000) + playNum).toString(),style: TextStyle(fontSize: 12,fontFamily: 'PingFang SC-Medium',color: Color(0xFFFFFFFF),fontWeight: FontWeight.w400,),)
+              ],
+            ),
+          ),
+        ),
 
         Positioned(
           left: -8,

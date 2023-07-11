@@ -104,6 +104,7 @@ class TikTokVideoPageState extends State<TikTokVideoPage> {
         if (player.value.state == FijkState.started){
           setState(() {
             player.pause();
+            _pauseOrStart = false;
             isShowDialog = true;
             showTime++;
           });
@@ -155,7 +156,9 @@ class TikTokVideoPageState extends State<TikTokVideoPage> {
         if (isShowDialog){
           if (player.state == FijkState.started) {
             player.pause();
-            _pauseOrStart = true;
+            setState(() {
+              _pauseOrStart = false;
+            });
           }
           getShowDialog(context);
 
@@ -163,8 +166,10 @@ class TikTokVideoPageState extends State<TikTokVideoPage> {
         }else{
           if (player.state == FijkState.started) {
             await player.pause();
+            _pauseOrStart = false;
           } else {
             await player.start();
+            _pauseOrStart = true;
           }
           setState(() {});
         }
