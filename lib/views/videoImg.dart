@@ -49,7 +49,10 @@ class VideoImg extends StatelessWidget {
             height: imgHeight,
             fit: BoxFit.cover,
             errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-              return Image.asset('lib/assets/images/logo.png',width: imgWidth,height: imgHeight,fit: BoxFit.cover,);
+              return Opacity(
+                opacity: 0.4,
+                child: Image.asset('lib/assets/images/logo.png',width: imgWidth * 0.6,height: imgHeight * 0.6,fit: BoxFit.cover,),
+              );
             },
           ),
         ),
