@@ -460,7 +460,7 @@ class _CustomFijkPanelState extends State<CustomFijkPanel> {
 
   /// 快进视频时间
   void _onVideoTimeChangeUpdate(double value) {
-    if(widget.hasPermission){
+    if(!widget.hasPermission){
       return;
     }
     if (_duration.inMilliseconds < 0 ||
@@ -615,17 +615,17 @@ class _CustomFijkPanelState extends State<CustomFijkPanel> {
             }
           }
 
-          isShowDouble = false;
-          player.setSpeed(1.0);
+          /*isShowDouble = false;
+          player.setSpeed(1.0);*/
 
         });
       },
-      onTapDown: (e) {
+      /*onTapDown: (e) {
         setState(() {
           isShowDouble = true;
           player.setSpeed(2.0);
         });
-      },
+      },*/
       onHorizontalStart: _onVideoTimeChangeUpdate,
       onHorizontalChange: _onVideoTimeChangeUpdate,
       onHorizontalEnd: _onVideoTimeChangeEnd,
