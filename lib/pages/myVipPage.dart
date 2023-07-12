@@ -137,7 +137,7 @@ class MyVipPageState extends BaseState<MyVipPage,MyVipPagePresenter>{
                     ),*/
                   ),
                   child: ClipOval(
-                      child:Image.asset('lib/assets/images/head_icon.gif',fit:BoxFit.cover,)
+                      child:Image.asset('lib/assets/images/avator/001.webp',fit:BoxFit.cover,)
                   ),
                 ),
 
@@ -152,7 +152,7 @@ class MyVipPageState extends BaseState<MyVipPage,MyVipPagePresenter>{
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text('隔壁老王',style: TextStyle(fontSize: 16,fontWeight:FontWeight.bold,fontFamily: 'PingFang SC-Bold',color: Color(0xFFFFD96B)),),
+                          Text('千歌未央',style: TextStyle(fontSize: 16,fontWeight:FontWeight.bold,fontFamily: 'PingFang SC-Bold',color: Color(0xFFFFD96B)),),
                           SizedBox(width: 8,),
                           Image.asset('lib/assets/images/myvip/vip_log.png',width: 30,height: 30,)
                         ],
@@ -318,16 +318,6 @@ class MyVipPageState extends BaseState<MyVipPage,MyVipPagePresenter>{
         ),
         preferredSize:  Size(MediaQuery.of(context).size.width, 45),
       ),
-      /*body: Container(
-        color: Color(0xFF060123),
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: list,
-          ),
-        ),
-      ),*/
       body: RefreshIndicator(
         key: _refreshKey,    //自定义 key，需要通过 key 获取到对应的 State
         onRefresh: refreshData,

@@ -360,7 +360,7 @@ class VideoUserInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            '@隔壁老王',
+            '@千歌未央',
             style: StandardTextStyle.big,
           ),
           Container(height: 10),

@@ -132,7 +132,7 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
               ),
             ),
             child: ClipOval(
-              child:Image.asset('lib/assets/images/head_icon.gif',fit:BoxFit.cover,)
+              child:Image.asset('lib/assets/images/avator/001.webp',fit:BoxFit.cover,)
             ),
           ),
 
@@ -145,7 +145,7 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
                 // mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('隔壁老王',style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold,fontFamily: 'PingFang SC-Bold',color: Color(0xFFFFFFFF)),),
+                  Text('千歌未央',style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold,fontFamily: 'PingFang SC-Bold',color: Color(0xFFFFFFFF)),),
                   SizedBox(height: 10),
                   Text('ID: $userId',style: TextStyle(fontSize: 12,fontWeight:FontWeight.w400,fontFamily: 'PingFang SC-Medium',color: Color(0x80FFFFFF)),),
                 ],

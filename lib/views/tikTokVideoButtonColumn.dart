@@ -101,7 +101,7 @@ class TikTokAvatar extends StatelessWidget {
 
   const TikTokAvatar({
     Key key,
-    this.anchorAvatarImg: "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
+    this.anchorAvatarImg: "lib/assets/images/avator/001.webp",
   }) : super(key: key);
 
   @override
@@ -119,7 +119,7 @@ class TikTokAvatar extends StatelessWidget {
         color: Colors.orange,
       ),
       child: ClipOval(
-        child: Image.network(anchorAvatarImg,fit: BoxFit.cover,),
+        child: Image.asset(anchorAvatarImg,fit: BoxFit.cover,),
       ),
     );
     Widget addButton = Container(

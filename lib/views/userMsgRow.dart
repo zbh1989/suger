@@ -48,7 +48,7 @@ class UserMsgRow extends StatelessWidget {
         width: 40,
         child: lead ??
             ClipOval(
-                child:Image.asset('lib/assets/images/head_icon.gif',fit:BoxFit.cover,)
+                child:Image.asset('lib/assets/images/avator/001.webp',fit:BoxFit.cover,)
             ),
       ),
     );

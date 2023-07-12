@@ -103,7 +103,7 @@ class _CommentRow extends StatelessWidget {
         height: 36,
         width: 36,
         child: ClipOval(
-            child:Image.asset('lib/assets/images/head_icon.gif',fit:BoxFit.cover,)
+            child:Image.asset('lib/assets/images/avator/001.webp',fit:BoxFit.cover,)
         ),
       ),
     );
