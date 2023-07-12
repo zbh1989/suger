@@ -15,6 +15,8 @@ class CheckUpdateVersion {
 
   int oldVersion;
 
+  double appSize;
+
   bool needUpdate = false;
 
   int forceUpdate;
@@ -34,6 +36,14 @@ class CheckUpdateVersion {
         }
       }),
 
+      PreferenceUtils.instance.getString("appSize").then((val){
+        if(val == null){
+          appSize = double.parse('30.0');
+        }else{
+          appSize = double.parse(val);
+        }
+      }),
+
       PreferenceUtils.instance.getInteger("updateStatus").then((val){
         forceUpdate = val;
       }),
@@ -46,7 +56,7 @@ class CheckUpdateVersion {
         oldVersion = int.parse(val.version.split('.')[2]);//获取当前的版本号
       })
     ]).then((res) async {
-      if(newVersion > oldVersion){
+      if(newVersion > oldVersion && appSize != null){
         // Toast.show('更新版本 新版号：$newVersion 旧版本号：$oldVersion 开始...');
         /// 更新升级
         needUpdate = true;
@@ -54,7 +64,7 @@ class CheckUpdateVersion {
         param['isForce'] = forceUpdate;
         param['versionName'] = newVersion.toString();
         param['apkUrl'] = appDownloadUrl + '/Android/V$newVersion/APP_' + Api.cno + '.apk';
-        param['apkSize'] = 30.21*1024;
+        param['apkSize'] = appSize*1024;
         param['versionCode'] = newVersion.toString();
         param['updateLog'] = '';
 

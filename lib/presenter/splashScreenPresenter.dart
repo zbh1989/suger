@@ -54,7 +54,18 @@ class SplashScreenPresenter extends BasePresenter<SplashScreenState> {
             /// 打包和更新版本用到，很重要
             /// *****************************************************************
             PreferenceUtils.instance.saveString("cno", Api.cno); // 渠道号
-            PreferenceUtils.instance.saveString("appVersion", configInfo['appVersion']); // 版本号
+            
+            ///  版本和 包大小
+            String versionAndSize = configInfo['appVersion'];
+            if(versionAndSize != null && versionAndSize.split('#').length > 1){
+              var versionSizeArr = versionAndSize.split('#');
+              PreferenceUtils.instance.saveString("appVersion", versionSizeArr[0]); // 版本号
+              PreferenceUtils.instance.saveString("appSize", versionSizeArr[1]); // 包大小
+            }else{
+              PreferenceUtils.instance.saveString("appVersion", configInfo['appVersion']); // 版本号
+              PreferenceUtils.instance.saveString("appSize", '30'); // 包大小
+            }
+
             /// *****************************************************************
 
             PreferenceUtils.instance.saveString("landingPage", configInfo['landingPage'] + Api.cno); // APP下載落地頁

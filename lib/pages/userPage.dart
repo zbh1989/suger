@@ -63,15 +63,15 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
 
 
     await Future.wait([
-        /// 当前用户是否是VIP，还是普通用户，金币余额
-        PreferenceUtils.instance.getInteger('vipStatus').then((val){
-          vipStatus = val;
-        }),
+      /// 当前用户是否是VIP，还是普通用户，金币余额
+      PreferenceUtils.instance.getInteger('vipStatus').then((val){
+        vipStatus = val;
+      }),
 
-        /// 当前用户的金币
-        PreferenceUtils.instance.getInteger('cronNum').then((val){
-          cronNum = val;
-        }),
+      /// 当前用户的金币
+      PreferenceUtils.instance.getInteger('cronNum').then((val){
+        cronNum = val;
+      }),
 
       /// 当前用户的ID
       PreferenceUtils.instance.getString('userId').then((val){
@@ -132,10 +132,7 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
               ),
             ),
             child: ClipOval(
-              child: Image.network(
-                "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
-                fit: BoxFit.cover,
-              ),
+              child:Image.asset('lib/assets/images/head_icon.gif',fit:BoxFit.cover,)
             ),
           ),
 
@@ -230,28 +227,28 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          GestureDetector(
-            onTap: (){
-              Navigator.of(context).push(MaterialPageRoute(builder:(ctx)=>BuyVipPage()));
-            },
-            child: Container(
-              alignment: Alignment.bottomLeft,
-              padding: EdgeInsets.only(left: 16,top: 8),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children:[
-                    Text('VIP限时特惠  畅看全场',style: TextStyle(fontSize: 16,fontWeight:FontWeight.bold,fontFamily: 'PingFang SC-Bold',color: Color(0xFFFFFFFF)),),
-                    SizedBox(height: 4,),
-                    Text('开通VIP全场畅看  剩余可下载次数 0',style: TextStyle(fontSize: 12,color: Color(0xFFAC5AFF),fontWeight:FontWeight.w400,fontFamily: 'PingFang SC-Medium',),),
-                  ]
-              ),
+          Container(
+            alignment: Alignment.bottomLeft,
+            padding: EdgeInsets.only(left: 16,top: 8),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children:[
+                  Text('VIP限时特惠  畅看全场',style: TextStyle(fontSize: 16,fontWeight:FontWeight.bold,fontFamily: 'PingFang SC-Bold',color: Color(0xFFFFFFFF)),),
+                  SizedBox(height: 4,),
+                  Text('开通VIP全场畅看  剩余可下载次数 0',style: TextStyle(fontSize: 12,color: Color(0xFFAC5AFF),fontWeight:FontWeight.w400,fontFamily: 'PingFang SC-Medium',),),
+                ]
             ),
-          ),
+          )
         ],
       ),
     );
-    widgetList.add(openVip);
+    widgetList.add(GestureDetector(
+      onTap: (){
+        Navigator.of(context).push(MaterialPageRoute(builder:(ctx)=>BuyVipPage()));
+      },
+      child: openVip,
+    ));
 
     // 金币充值 分享邀请  推广赚现金
     double shareItemWidth = (MediaQuery.of(context).size.width - 10 * 2 - 18 * 2)/3;

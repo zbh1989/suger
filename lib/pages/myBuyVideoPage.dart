@@ -118,7 +118,7 @@ class MyBuyVideoPageState extends BaseState <MyBuyVideoPage,MyBuyVideoPagePresen
           Map data = dataList[index];
           return Container(
             margin: EdgeInsets.only(top: 16,bottom: 16,),
-            child: ImageBuyItem(imgUrl:data['hcover'] == '' ? data['vcover'] : data['hcover'],videoUrl: data['playPath'],videoId: data['id'],
+            child: ImageBuyItem(imgUrl:data['hcover'] == '' ? data['vcover'] : data['hcover'],videoUrl: data['playPath'],videoId: data['videoId'],
                 desc:data['title'],showLevel: data['toll'],gold: data['price'],createTime: data['createTime'],videoStartTime: data['videoStartTime'],videoEndTime: data['videoEndTime'],),
           );
       },

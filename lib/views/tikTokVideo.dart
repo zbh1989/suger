@@ -86,9 +86,6 @@ class TikTokVideoPageState extends State<TikTokVideoPage> {
     if(widget.videoStartTime != null && widget.videoStartTime > 0 && widget.videoEndTime != null && widget.videoEndTime > 0){
       player.setOption(FijkOption.playerCategory, "seek-at-start", widget.videoStartTime*1000);
       defaultVideoEndTime = widget.videoEndTime;
-    }else{
-      player.seekTo(135*1000);
-      defaultVideoEndTime = 45;
     }
   }
 
@@ -104,7 +101,7 @@ class TikTokVideoPageState extends State<TikTokVideoPage> {
         currentDuration = v.toString().substring(0,v.toString().indexOf("."));
         // 获取播放秒数
         String second = currentDuration.split(":")[2];
-        if(double.parse(second) == defaultVideoEndTime && !isShowDialog){
+        if(double.parse(second) == defaultVideoEndTime && !isShowDialog && !widget.hasPermission){
           /// 播放状态
           if (player.value.state == FijkState.started){
             player.pause();

@@ -79,7 +79,7 @@ class ImageBuyItem extends StatelessWidget {
                 ),
               ),
 
-              getShowLevelIcon(showLevel, gold),
+              // getShowLevelIcon(showLevel, gold),
 
               // getShowLevelIcon(1, 30),
 

@@ -5,6 +5,7 @@ import 'package:caihong_app/utils/toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../base/view/base_state.dart';
+import '../utils/PreferenceUtils.dart';
 import '../views/videoImg.dart';
 
 
@@ -23,11 +24,21 @@ class MyVipPageState extends BaseState<MyVipPage,MyVipPagePresenter>{
 
   List dataList = [];
 
+  String endVipDate = '1990-1-1';
+
   //自定义 RefreshIndicatorState 类型的 Key
   final GlobalKey<RefreshIndicatorState> _refreshKey = GlobalKey();
 
   @override
   void initState(){
+    PreferenceUtils.instance.getString("endVipDate").then((val){
+      if(mounted && val != null){
+        setState(() {
+          endVipDate = val;
+        });
+      }
+    });
+
     initData();
     //必须在组件挂载运行的第一帧后执行，否则 _refreshKey 还没有与组件状态关联起来
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -41,9 +52,11 @@ class MyVipPageState extends BaseState<MyVipPage,MyVipPagePresenter>{
   void initData() async {
     await mPresenter.getRecommandVideos().then((videoList){
       dataList.addAll(videoList);
-      setState(() {
+      if(mounted){
+        setState(() {
 
-      });
+        });
+      }
     });
   }
 
@@ -124,10 +137,7 @@ class MyVipPageState extends BaseState<MyVipPage,MyVipPagePresenter>{
                     ),*/
                   ),
                   child: ClipOval(
-                    child: Image.network(
-                      "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
-                      fit: BoxFit.cover,
-                    ),
+                      child:Image.asset('lib/assets/images/head_icon.gif',fit:BoxFit.cover,)
                   ),
                 ),
 
@@ -148,7 +158,7 @@ class MyVipPageState extends BaseState<MyVipPage,MyVipPagePresenter>{
                         ],
                       ),
                       // SizedBox(height: 8),
-                      Text('周卡会员:2023-07-12',style: TextStyle(fontSize: 12,fontWeight:FontWeight.w400,fontFamily: 'PingFang SC-Medium',color: Color(0xFFFFFFFF)),),
+                      Text('会员到期:$endVipDate',style: TextStyle(fontSize: 12,fontWeight:FontWeight.w400,fontFamily: 'PingFang SC-Medium',color: Color(0xFFFFFFFF)),),
                     ],
                   ),
                 ),

@@ -23,11 +23,8 @@ class MyVipPagePresenter extends BasePresenter<MyVipPageState>{
             if (data != null) {
               Map<String, dynamic> map = parseData(data);
               if(map['code'] == 200){
-              // if(map['data']['code'] == 200){
-                // result = Future.value(map['data']['data']);
                 result = Future.value(map['data']);
               }else{
-                // view.showToast(map['data']['msg']);
                 view.showToast(map['msg']);
               }
             }else{
