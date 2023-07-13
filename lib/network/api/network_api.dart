@@ -97,6 +97,9 @@ class Api {
   /// 绑定邀请码
   static const String BIND_INVITE_CODE = "api/user/bindPromCode";
 
+  /// VIP(售卖)等级
+  static const String VIP_LEVEL_QUERY = "api/level/list";
+
   static const String API_URL = "";
 
 }

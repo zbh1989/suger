@@ -37,10 +37,23 @@ class BuyVipPageState extends BaseState<BuyVipPage,BuyVipPagePresenter> with Wid
 
   String orderNo;
 
+  List vipLevelList = [];
+
   @override
   void initState(){
     WidgetsBinding.instance.addObserver(this);
     super.initState();
+    mPresenter.queryVipLevelList();
+
+  }
+
+  void refreshData(List list){
+    if(list != null){
+      vipLevelList.clear();
+      setState(() {
+        vipLevelList.addAll(list);
+      });
+    }
   }
 
   @override
@@ -102,24 +115,26 @@ class BuyVipPageState extends BaseState<BuyVipPage,BuyVipPagePresenter> with Wid
     list.add(header);
 
     ///  滚动选择 充值卡
-    Widget vipCardPageViewWidget = GestureDetector(
-      child: Container(
-        margin: EdgeInsets.only(left: 28,top: 24.5),
-        child: VipCardPageView(getCardItemInfo:(map){
-          money = map['money'];
-        },
-        openPayDialog: (){
-          ///调用支付
-          /// 生成订单号
-          DateTime currentTime = DateTime.now();
-          int timeMills = currentTime.microsecondsSinceEpoch;
-          String orderNo = timeMills.toString() + Random().nextInt(1000).toString();
-          this.orderNo = orderNo;
-          showBottomFunction(orderNo) ;
-        },),
-      ),
-    );
-    list.add(vipCardPageViewWidget);
+    if(vipLevelList != null && vipLevelList.length > 0){
+      Widget vipCardPageViewWidget = GestureDetector(
+        child: Container(
+          margin: EdgeInsets.only(left: 28,top: 24.5),
+          child: VipCardPageView(dataList:vipLevelList,getCardItemInfo:(map){
+            money = int.parse(map['sellingPrice']);
+          },
+            openPayDialog: (){
+              ///调用支付
+              /// 生成订单号
+              DateTime currentTime = DateTime.now();
+              int timeMills = currentTime.microsecondsSinceEpoch;
+              String orderNo = timeMills.toString() + Random().nextInt(1000).toString();
+              this.orderNo = orderNo;
+              showBottomFunction(orderNo) ;
+            },),
+        ),
+      );
+      list.add(vipCardPageViewWidget);
+    }
 
     /// member benefits
     Widget memberBenefitsTitle = Container(
