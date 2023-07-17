@@ -37,12 +37,12 @@ class _ConversationListState extends State<ConversationList> {
             Expanded(
               child: Row(
                 children: <Widget>[
-                  Image.asset(
+                  /*Image.asset(
                     widget.imageUrl,
-                    width: 50,
-                    height: 50,
+                    width: 30,
+                    height: 30,
                     fit: BoxFit.cover,
-                  ),
+                  ),*/
                   const SizedBox(
                     width: 16,
                   ),

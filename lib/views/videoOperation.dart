@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:caihong_app/utils/toast.dart';
 import 'package:flutter/material.dart';
 
 import '../base/view/base_state.dart';
@@ -102,31 +103,41 @@ class VideoOperationState extends BaseState<VideoOperation,VideoOperationPresent
           ),
 
 
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            textDirection: TextDirection.ltr,
-            verticalDirection: VerticalDirection.down,
-            children: [
-              Image.asset('lib/assets/images/cache_down_load.png',width: 30,height: 30,),
-              SizedBox(height: 7,),
-              Text('缓存下载',style: TextStyle(fontSize: 12,color: Color(0xFFFFFFFF),fontFamily: 'PingFang SC-Medium',fontWeight: FontWeight.w400),)
-            ],
+          GestureDetector(
+            onTap: (){
+              Toast.tips('维护中,暂停下载');
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              textDirection: TextDirection.ltr,
+              verticalDirection: VerticalDirection.down,
+              children: [
+                Image.asset('lib/assets/images/cache_down_load.png',width: 30,height: 30,),
+                SizedBox(height: 7,),
+                Text('缓存下载',style: TextStyle(fontSize: 12,color: Color(0xFFFFFFFF),fontFamily: 'PingFang SC-Medium',fontWeight: FontWeight.w400),)
+              ],
+            ),
           ),
 
 
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            textDirection: TextDirection.ltr,
-            verticalDirection: VerticalDirection.down,
-            children: [
-              Image.asset('lib/assets/images/switch.png',width: 30,height: 30,),
-              SizedBox(height: 7,),
-              Text(widget.level == 3 ? 'VIP线路' : '普通路线',
-                style: TextStyle(fontSize: 12,color: Color(0xFFFFFFFF),fontFamily: 'PingFang SC-Medium',fontWeight: FontWeight.w400),
-              )
-            ],
+          GestureDetector(
+            onTap: (){
+              Toast.tips('维护中,无法切换路线');
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              textDirection: TextDirection.ltr,
+              verticalDirection: VerticalDirection.down,
+              children: [
+                Image.asset('lib/assets/images/switch.png',width: 30,height: 30,),
+                SizedBox(height: 7,),
+                Text(widget.level == 3 ? 'VIP线路' : '普通路线',
+                  style: TextStyle(fontSize: 12,color: Color(0xFFFFFFFF),fontFamily: 'PingFang SC-Medium',fontWeight: FontWeight.w400),
+                )
+              ],
+            ),
           ),
 
         ],

@@ -17,6 +17,8 @@ import '../views/versionInfo.dart';
 import 'blankPage.dart';
 import 'buyVipPage.dart';
 import 'chargePage.dart';
+import 'chatDetailPage.dart';
+import 'chatPage.dart';
 import 'homePage.dart';
 import 'loginPage.dart';
 import 'myBuyVideoPage.dart';
@@ -433,8 +435,22 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
     );
     widgetList.add(mineModule);
 
-    // 我的购买 下载缓存 填写邀请码 填写兑换码 帮助反馈 官方交流群
+    // 联系我们 我的购买 下载缓存 填写邀请码 填写兑换码 帮助反馈 官方交流群 版本信息
     List<Widget> itemList = [
+      GestureDetector(
+        onTap: (){
+          Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>ChatDetailPage(name:userId),));
+        },
+        child: ListTile(
+          leading: Icon(Icons.ring_volume,size: 20,color: Colors.white70,),
+          title: Text('联系我们'),
+          trailing: Image.asset('lib/assets/images/next.png',width: 18,height: 18,),
+        ),
+      ),
+      Container(
+        child: Divider(height: 1.0,indent: 0.0,color: Color(0x33FFFFFF),),
+      ),
+
       GestureDetector(
         onTap: (){
           Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>MyBuyVideoPage(),));

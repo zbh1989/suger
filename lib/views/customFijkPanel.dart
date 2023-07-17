@@ -185,6 +185,15 @@ class _CustomFijkPanelState extends State<CustomFijkPanel> {
       print("多媒体声音变化$volume");
       _currentVolume = volume;
     });*/
+
+    if(!widget.hasPermission){
+      if(widget.videoStartTime >= 0 && widget.videoEndTime > 0){
+        defaultEndTime = widget.videoEndTime;
+      }else if(widget.baseVideoStartTime >= 0 && widget.baseVideoEndTime > 0){
+        defaultEndTime = widget.baseVideoEndTime;
+      }
+    }
+
     player.addListener(_playerValueChanged);
 
     /// 当前进度
@@ -315,15 +324,6 @@ class _CustomFijkPanelState extends State<CustomFijkPanel> {
       });
     }
 
-    if(player.state == FijkState.prepared){
-      if(!widget.hasPermission){
-        if(widget.videoStartTime >= 0 && widget.videoEndTime > 0){
-          defaultEndTime = widget.videoEndTime;
-        }else if(widget.baseVideoStartTime >= 0 && widget.baseVideoEndTime > 0){
-          defaultEndTime = widget.baseVideoEndTime;
-        }
-      }
-    }
     var valueState = value.state;
 
     var playing = (valueState == FijkState.started);
@@ -427,16 +427,35 @@ class _CustomFijkPanelState extends State<CustomFijkPanel> {
 
   /// 控制器显示隐藏
   void _cancelAndRestartTimer() {
+    /// 无权限，到时间不能播放
+    if (!widget.hasPermission && isShowDialog){
+      if (_playing == true) {
+        player.pause();
+      }
+      if(player.value.fullScreen){
+        player.exitFullScreen();
+        isShowDialog = true;
+        widget.noPermissionDialog();
+        showTime++;
+      }else{
+        isShowDialog = true;
+        widget.noPermissionDialog();
+        showTime++;
+      }
+    }else{
+      if(_playing){
+        player.pause();
+        _offstage = false;
+      }else{
+        player.start();
+        _offstage = true;
+      }
+    }
+
     if (_hideStuff == true) {
       _startHideTimer();
     }
-    if(_playing){
-      player.pause();
-      _offstage = false;
-    }else{
-      player.start();
-      _offstage = true;
-    }
+
     setState(() {
       _hideStuff = !_hideStuff;
     });
@@ -974,7 +993,6 @@ class _CustomFijkPanelState extends State<CustomFijkPanel> {
                       child: !isFullScreen ? _buildVideoTimeBar() : null,
                     ),
                   ),
-
                   /// 总时长
                   Text(
                     _duration2String(_duration),

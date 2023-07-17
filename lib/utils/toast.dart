@@ -15,7 +15,7 @@ class Toast {
   static tips(String message, {duration = 2000,position:ToastGravity.CENTER}) {
     Fluttertoast.showToast(
         msg: message,
-        gravity: ToastGravity.TOP,
+        gravity: position,
         backgroundColor: Colors.white,
         textColor: Colors.grey,
         fontSize: 16.0);

@@ -7,9 +7,6 @@ import 'loginPage.dart';
 
 /**
  * DESC: 聊天
- * Author：原哥
- * QQ: 2729404527
- * Email: 2729404527@qq.com
  */
 class ChatPage extends StatefulWidget {
   @override
@@ -74,7 +71,7 @@ class ChatPageState extends BaseState<ChatPage, ChatPagePresenter> {
               itemCount: chatUsers.length,
               shrinkWrap: true,
               padding: const EdgeInsets.only(top: 16),
-              physics: const NeverScrollableScrollPhysics(),
+              // physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return ConversationList(
                   name: chatUsers[index].name,

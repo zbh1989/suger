@@ -20,8 +20,7 @@ class ChatDetailPage extends StatefulWidget {
   ChatDetailPageState createState() => ChatDetailPageState();
 }
 
-class ChatDetailPageState
-    extends BaseState<ChatDetailPage, ChatPageDetailPresenter> {
+class ChatDetailPageState extends BaseState<ChatDetailPage, ChatPageDetailPresenter> {
   TextEditingController _controller = new TextEditingController();
 
   WebSocket _webSocket;
@@ -119,12 +118,12 @@ class ChatDetailPageState
                 const SizedBox(
                   width: 2,
                 ),
-                Image.asset(
+                /*Image.asset(
                   "lib/assets/images/icon_head.png",
-                  width: 40,
-                  height: 40,
+                  width: 20,
+                  height: 20,
                   fit: BoxFit.cover,
-                ),
+                ),*/
                 const SizedBox(
                   width: 12,
                 ),
