@@ -39,7 +39,7 @@ class ChatDetailPageState extends BaseState<ChatDetailPage, ChatPageDetailPresen
 
   int page = 1;
 
-  int limit  = 10;
+  int limit  = 30;
 
   List messageList = [];
 
