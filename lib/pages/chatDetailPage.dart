@@ -1,4 +1,5 @@
 import 'dart:convert' as convert;
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:caihong_app/base/view/base_state.dart';
@@ -8,12 +9,17 @@ import 'package:caihong_app/utils/log_utils.dart';
 import 'package:caihong_app/utils/userStatic.dart';
 import 'package:flutter/material.dart';
 
+import '../network/api/network_api.dart';
+import '../network/network_util.dart';
+import '../utils/toast.dart';
+import '../views/chat_scroll_physics.dart';
+
 class ChatDetailPage extends StatefulWidget {
-  final String name;
+  final String userId;
   final String userImageUrl;
   final bool groupType;
 
-  const ChatDetailPage({Key key, this.name, this.userImageUrl, this.groupType})
+  const ChatDetailPage({Key key, this.userId, this.userImageUrl, this.groupType})
       : super(key: key);
 
   @override
@@ -21,39 +27,36 @@ class ChatDetailPage extends StatefulWidget {
 }
 
 class ChatDetailPageState extends BaseState<ChatDetailPage, ChatPageDetailPresenter> {
-  TextEditingController _controller = new TextEditingController();
+  final TextEditingController _controller = new TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  final FocusNode _focusNode = FocusNode();
 
   WebSocket _webSocket;
 
+  bool _isLoading = false;
+
   String onlineStatus = "";
 
-  showMessageDetail(List<Map<String, dynamic>> maps) {
-    UserMessage.messages.clear();
-    UserMessage.messages = [];
-    setState(() {
-      maps.forEach((element) {
-        if (element["from_user"] == element["to_user"]) return;
-        UserMessage.messages.add(ChatMessage(
-            messageContent: element["im_msg"],
-            messageType: element["message_type"],
-            fromUser: element["from_user"],
-            toUser: element["to_user"],
-            recordTime: element["update_time"]));
-        UserMessage.messages
-            .sort((left, right) => right.recordTime.compareTo(left.recordTime));
-      });
-    });
-  }
+  int page = 1;
+
+  int limit  = 10;
+
+  List messageList = [];
+
+  int lastId = 0;
 
 
   void closeSocket() {
-    _webSocket.close();
+    if(_webSocket != null){
+      _webSocket.close();
+    }
   }
 
   // 向服务器发送消息
-  void sendMessage(dynamic message) {
-    print(convert.jsonEncode(message));
-    _webSocket.add(convert.jsonEncode(message));
+  void sendMessage(String message) {
+    if(message != null && _webSocket != null){
+      _webSocket.add(message);
+    }
   }
 
   @override
@@ -65,32 +68,75 @@ class ChatDetailPageState extends BaseState<ChatDetailPage, ChatPageDetailPresen
 
   @override
   void initState() {
+    super.initState();
+    _scrollController.addListener(scrollListener);
+    _focusNode.addListener(textFocusListener);
+    connect();
   }
 
-  void setSessionID(String id) {
-    Log.i("用户session:" + id);
-    if (widget.name == "1000000") {
-      UserMessage.sessionID = "1000000";
-    } else {
-      UserMessage.sessionID = id;
+  void refreshData(List list){
+    _isLoading = false;
+    if(list != null && list.length > 0 && mounted){
+      setState(() {
+        messageList.addAll(list);
+      });
     }
-    setState(() {
-      if (id.isNotEmpty && id != "null") {
-        this.onlineStatus = "在线";
-      } else {
-        this.onlineStatus = "离线";
-      }
-    });
   }
+
+  void scrollListener() {
+    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent) {
+      if (_isLoading) return;
+      if(!_isLoading) {
+        mPresenter.getChatHisList(messageList[messageList.length - 1]['id'],widget.userId,page++,limit);
+      }
+      _isLoading = true;
+    }
+  }
+
+  void textFocusListener() {
+    _scrollController.animateTo(0.0,
+        duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
+  }
+
+  void connect() {
+    try{
+      String url = Api.WS_HOST_URL + Api.WEBSOCKET_URL; ///     Api.LOCAL_WEBSOCKET_URL
+      Future<WebSocket> futureWebSocket = WebSocket.connect(url + widget.userId + '/$page/$limit'); //socket地址
+      futureWebSocket.then((WebSocket ws) {
+        _webSocket = ws;
+        _webSocket.readyState;
+        // 监听事件
+        void onData(dynamic content) {
+          List resp = jsonDecode(content);
+          if(resp != null && resp.length > 0 && mounted){
+            /// 处理消息
+            setState(() {
+              messageList.insertAll(0,resp);
+            });
+          }
+
+        }
+
+        _webSocket.listen(onData,
+            onError: (a) => print("error"), onDone: () => print("done"));
+
+        // sendMessage('hello,world zzzz');
+
+      });
+    }catch(e){
+      print(e);
+      Toast.show('websocket 消息异常: $e');
+    }
+
+  }
+
 
   void sendMsg() {
     var message = {
       "msg": _controller.text,
-      "toUser": UserMessage.sessionID,
-      "type": widget.groupType ? 0 : 1
+      "userId": widget.userId,
     };
-    sendMessage(message);
-    mPresenter.addMessage(widget.name, _controller.text, 0);
+    sendMessage(_controller.text);
     _controller.clear();
   }
 
@@ -133,7 +179,7 @@ class ChatDetailPageState extends BaseState<ChatDetailPage, ChatPageDetailPresen
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        widget.name,
+                        widget.userId,
                         style: TextStyle(
                             fontSize: 16,
                             color: Colors.black,
@@ -158,27 +204,29 @@ class ChatDetailPageState extends BaseState<ChatDetailPage, ChatPageDetailPresen
       body: Stack(
         children: <Widget>[
           ListView.builder(
-            itemCount: UserMessage.messages.length,
+            itemCount: messageList.length,
             reverse: true,
+            controller: _scrollController,
+            physics: ChatScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             padding: const EdgeInsets.only(bottom: 100),
             itemBuilder: (context, index) {
               return Container(
                 padding: const EdgeInsets.only(
-                    left: 14, right: 14, top: 10, bottom: 10),
+                    left: 14, right: 14, top: 6, bottom: 6),
                 child: Align(
-                    alignment: (UserMessage.messages[index].messageType == 1
+                    alignment: (messageList[index]['status'] == 2
                         ? Alignment.topLeft
                         : Alignment.topRight),
                     child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: (UserMessage.messages[index].messageType == 1
+                          color: (messageList[index]['status'] == 2
                               ? Colors.white
                               : Colors.green),
                         ),
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
                         child: Text(
-                          UserMessage.messages[index].messageContent,
+                          messageList[index]['content'],
                           style: TextStyle(fontSize: 15, color: Colors.black),
                         ))),
               );
@@ -193,7 +241,7 @@ class ChatDetailPageState extends BaseState<ChatDetailPage, ChatPageDetailPresen
               color: Colors.white,
               child: Row(
                 children: <Widget>[
-                  GestureDetector(
+                  /*GestureDetector(
                     onTap: () {},
                     child: Container(
                       height: 30,
@@ -208,7 +256,7 @@ class ChatDetailPageState extends BaseState<ChatDetailPage, ChatPageDetailPresen
                         size: 20,
                       ),
                     ),
-                  ),
+                  ),*/
                   const SizedBox(
                     width: 15,
                   ),
@@ -227,7 +275,7 @@ class ChatDetailPageState extends BaseState<ChatDetailPage, ChatPageDetailPresen
                   ),
                   FloatingActionButton(
                     onPressed: () {
-                      // mPresenter.getSessionIDByUser(widget.name, false);
+                      sendMsg();
                     },
                     child: const Icon(
                       Icons.send,

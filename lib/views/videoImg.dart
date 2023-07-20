@@ -17,7 +17,7 @@ class VideoImg extends StatelessWidget {
     this.gold : 0,
     this.desc : '',
     this.onTapPlayer,
-    this.playNum:2000
+    this.playNum
   }) : super(key: key);
   final double imgWidth;
   final double imgHeight;
@@ -69,7 +69,7 @@ class VideoImg extends StatelessWidget {
               children: [
                 Icon(Icons.remove_red_eye,size: 12,color: Color(0xFFFFFFFF),),
                 SizedBox(width: 5,),
-                Text((Random().nextInt(20000) + playNum).toString(),style: TextStyle(fontSize: 12,fontFamily: 'PingFang SC-Medium',color: Color(0xFFFFFFFF),fontWeight: FontWeight.w400,),)
+                Text(playNum.toString(),style: TextStyle(fontSize: 12,fontFamily: 'PingFang SC-Medium',color: Color(0xFFFFFFFF),fontWeight: FontWeight.w400,),)
               ],
             ),
           ),

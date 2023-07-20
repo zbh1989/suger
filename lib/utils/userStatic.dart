@@ -4,7 +4,6 @@ import 'package:caihong_app/bean/chatMessageModel.dart';
 
 class UserMessage{
   static int userId = 0;
-  static String sessionID;
   ///将对话暂存在这里
   static List<ChatMessage> messages = [
 

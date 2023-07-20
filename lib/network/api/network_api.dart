@@ -21,6 +21,15 @@ class Api {
   /// 服务器域名
   static const String HOST_URL = "http://206.238.76.51:10001/";
 
+  /// 服务器域名
+  static const String WS_HOST_URL = "ws://206.238.76.51:10001/";
+
+  /// 本地测试
+  static const String LOCAL_WEBSOCKET_URL = "ws://192.168.43.112:81/api/websocket/";
+
+  /// WebSocket URL
+  static const String WEBSOCKET_URL = "api/websocket/";
+
   /// 专题列表查询接口
   static const String TOPIC_LIST = "api/type/topic/list";
 
@@ -53,7 +62,6 @@ class Api {
 
   /// 购买视频
   static const String MY_BUY_VIDEO = "api/user/buy/list";
-
 
   /// 点赞收藏,更新观看次数
   static const String UPDATE_USER_ACTION = "api/user/action/insert";
@@ -99,6 +107,12 @@ class Api {
 
   /// VIP(售卖)等级
   static const String VIP_LEVEL_QUERY = "api/level/list";
+
+  /// 查询历史聊天记录
+  static const String CHAT_HIS_QUERY = "api/user/msg/list";
+
+  /// 清理历史聊天记录
+  static const String CHAT_HIS_CLEAR = "api/user/msg/flush";
 
   static const String API_URL = "";
 

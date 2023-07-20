@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:caihong_app/pages/searchBar.dart';
 import 'package:caihong_app/pages/watchVideoPage.dart';
 import 'package:flutter/cupertino.dart';
@@ -206,6 +208,9 @@ class MenuTopPageState extends BaseState<MenuTopicPage,MenuTopicPagePresenter> w
 
       //播放数
       int playNum = data['playNum'];
+      if(playNum == null || playNum == 0){
+        playNum = Random().nextInt(20000) + 2000;
+      }
 
       // 时长
       String duration = data['duration'];

@@ -68,7 +68,7 @@ class TikTokVideoPageState extends State<TikTokVideoPage> {
 
   int defaultVideoStartTime = 0;
 
-  int defaultVideoEndTime = 30;
+  int defaultVideoEndTime = 10;
 
   bool _pauseOrStart = true;
 

@@ -27,7 +27,7 @@ class _ConversationListState extends State<ConversationList> {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context){
-          return ChatDetailPage(name:widget.name,userImageUrl:widget.imageUrl,groupType: widget.name=="1000000"?true:false);
+          return ChatDetailPage(userId:widget.name,userImageUrl:widget.imageUrl,groupType: widget.name=="1000000"?true:false);
         }));
       },
       child: Container(

@@ -439,7 +439,7 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
     List<Widget> itemList = [
       GestureDetector(
         onTap: (){
-          Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>ChatDetailPage(name:userId),));
+          Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>ChatDetailPage(userId:userId),));
         },
         child: ListTile(
           leading: Icon(Icons.ring_volume,size: 20,color: Colors.white70,),
