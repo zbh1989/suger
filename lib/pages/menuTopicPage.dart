@@ -227,7 +227,7 @@ class MenuTopPageState extends BaseState<MenuTopicPage,MenuTopicPagePresenter> w
       int videoStartTime = data['videoStartTime'];
 
       // 视频图片
-      Widget view = VideoImg(imgUrl:imgUrl,imgWidth:(isMain || widget.showType == 2) ? bigImgWidth : imgWidth,imgHeight:(isMain || widget.showType == 2) ? bigImgHeight : imgHeight,duration:duration,showLevel:showLevel,gold: gold,desc:desc,videoId:videoId,
+      Widget view = VideoImg(imgUrl:imgUrl,imgWidth:(isMain || widget.showType == 2) ? bigImgWidth : imgWidth,imgHeight:(isMain || widget.showType == 2) ? bigImgHeight : imgHeight,duration:duration,showLevel:showLevel,gold: gold,desc:desc,videoId:videoId,playNum: playNum,
         onTapPlayer: (){
           //处理点击事件
           Navigator.of(context).push(
