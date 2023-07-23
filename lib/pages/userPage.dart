@@ -12,6 +12,7 @@ import '../network/api/network_api.dart';
 import '../utils/PreferenceUtils.dart';
 import '../utils/alertDialogUtil.dart';
 import '../utils/dialogUtil.dart';
+import '../utils/messageUtils.dart';
 import '../views/tiktokTabBar.dart';
 import '../views/versionInfo.dart';
 import 'blankPage.dart';
@@ -50,14 +51,21 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
   int vipStatus;
   int cronNum;
   String userId;
-
   String version;
+  int hasMsg;
 
   @override
   void initState() {
     super.initState();
     // mPresenter.checkLoginStatus();
     getUserInfo();
+    MessageUtils.notifyMsg = (update){
+      setState(() {
+        if(update && mounted){
+          hasMsg = 1;
+        }
+      });
+    };
   }
 
   void getUserInfo() async {
@@ -73,6 +81,11 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
       /// 当前用户的金币
       PreferenceUtils.instance.getInteger('cronNum').then((val){
         cronNum = val;
+      }),
+
+      /// 是否有未读消息，1： 有，其它没有
+      PreferenceUtils.instance.getInteger('hasMsg').then((val){
+        hasMsg = val;
       }),
 
       /// 当前用户的ID
@@ -439,11 +452,18 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
     List<Widget> itemList = [
       GestureDetector(
         onTap: (){
+          hasMsg = 0;
           Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>ChatDetailPage(userId:userId),));
         },
         child: ListTile(
           leading: Icon(Icons.ring_volume,size: 20,color: Colors.white70,),
-          title: Text('联系我们'),
+          title: Row(
+            children: [
+              Text('联系我们'),
+              SizedBox(width: 5,),
+              hasMsg == 1 ? Image.asset('lib/assets/images/red_circle.png',height: 8,width: 8,) : Container(),
+            ],
+          ),
           trailing: Image.asset('lib/assets/images/next.png',width: 18,height: 18,),
         ),
       ),

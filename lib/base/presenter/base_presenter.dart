@@ -66,9 +66,10 @@ class BasePresenter<V extends IBaseView> {
           }
         },
         onSuccessList: (data) {
-          // if (isClose) view.closeProgress();
+          if (isClose) view.closeProgress();
           if (onSuccessList != null) onSuccessList(data);
         }, onError: (code, msg) {
+          if (isClose) view.closeProgress();
           _onError(code, msg, onError);
         });
   }

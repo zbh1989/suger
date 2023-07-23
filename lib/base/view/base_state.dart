@@ -1,9 +1,12 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:io';
 import 'package:caihong_app/routers/common/fluro_navigator.dart';
 import 'package:caihong_app/utils/toast.dart';
 import 'package:caihong_app/utils/utils.dart';
 import 'package:caihong_app/widgets/progress_dialog.dart';
-
+import 'package:flutter/material.dart';
+import '../../network/api/network_api.dart';
+import '../../utils/PreferenceUtils.dart';
 import '../presenter/base_presenter.dart';
 import 'i_base_view.dart';
 

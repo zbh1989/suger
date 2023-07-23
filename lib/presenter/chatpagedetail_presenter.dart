@@ -23,6 +23,8 @@ class ChatPageDetailPresenter extends BasePresenter<ChatDetailPageState> {
       await requestFutureData<String>(
           Method.post,
           url: Api.HOST_URL + Api.CHAT_HIS_QUERY,
+          isShow: true,
+          isClose: true,
           queryParams: queryParams,
           onSuccess: (data) {
             if (data != null) {

@@ -15,6 +15,7 @@ import '../utils/dialogUtil.dart';
 import '../utils/stringUtils.dart';
 import '../views/customFijkPanel.dart';
 import '../views/guessLikePage.dart';
+import '../views/openNewVipDialog.dart';
 import '../views/openVipDialog.dart';
 import '../views/tiktokTabBar.dart';
 import '../views/videoOperation.dart';
@@ -581,7 +582,7 @@ class WatchVideoPageState extends BaseState<WatchVideoPage,WatchVideoPagePresent
       builder: (context) {
         return DialogUtil(
           marginTop: 30,
-          content: OpenVipDialog(),
+          content: OpenNewVipDialog(),
           onClose: (){Navigator.of(context).pop();},
         );
       },
