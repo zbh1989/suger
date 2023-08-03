@@ -10,16 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import '../network/api/network_api.dart';
 import '../utils/PreferenceUtils.dart';
-import '../utils/alertDialogUtil.dart';
-import '../utils/dialogUtil.dart';
 import '../utils/messageUtils.dart';
+import '../views/bindPhonePage.dart';
 import '../views/tiktokTabBar.dart';
 import '../views/versionInfo.dart';
 import 'blankPage.dart';
 import 'buyVipPage.dart';
 import 'chargePage.dart';
 import 'chatDetailPage.dart';
-import 'chatPage.dart';
 import 'homePage.dart';
 import 'loginPage.dart';
 import 'myBuyVideoPage.dart';
@@ -53,6 +51,7 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
   String userId;
   String version;
   int hasMsg;
+  String endVipDate;
 
   @override
   void initState() {
@@ -92,6 +91,12 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
       PreferenceUtils.instance.getString('userId').then((val){
         userId = val;
       }),
+
+    PreferenceUtils.instance.getString("endVipDate").then((val){
+      if(mounted && val != null){
+        endVipDate = val;
+      }
+    }),
 
       PackageInfo.fromPlatform().then((val) {
         version = val.version.split('.')[2];//获取当前的版本号
@@ -154,15 +159,17 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
           Expanded(
             child: Container(
               width: 140,
-              height: 50,
+              height: 70,
               margin: EdgeInsets.only(left: 10),
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('隔壁老王',style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold,fontFamily: 'PingFang SC-Bold',color: Color(0xFFFFFFFF)),),
-                  SizedBox(height: 10),
+                  SizedBox(height: 5),
                   Text('ID: $userId',style: TextStyle(fontSize: 12,fontWeight:FontWeight.w400,fontFamily: 'PingFang SC-Medium',color: Color(0x80FFFFFF)),),
+                  SizedBox(height: vipStatus == 0 ? 0 : 5),
+                  vipStatus == 0 ? Container() : Text('会员到期: $endVipDate',style: TextStyle(fontSize: 12,fontWeight:FontWeight.w400,fontFamily: 'PingFang SC-Medium',color: Color(0x80FFFFFF)),),
                 ],
               ),
             ),
@@ -188,7 +195,7 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
             ),
             child: GestureDetector(
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder:(ctx)=>Blank()));
+                Navigator.of(context).push(MaterialPageRoute(builder:(ctx)=>BindPhonePage()));
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

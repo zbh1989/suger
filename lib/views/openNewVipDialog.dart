@@ -84,7 +84,7 @@ class OpenNewVipDialog extends StatelessWidget {
         Container(
           width: imgWidth*0.8,
           height: 20,
-          margin:EdgeInsets.only(top: 6,),
+          margin:EdgeInsets.only(top: 6,bottom: 15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -115,7 +115,6 @@ class OpenNewVipDialog extends StatelessWidget {
 
 
     return Container(
-      height: imgWidth * 410 / 348 - 25,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(22),
         gradient: LinearGradient(

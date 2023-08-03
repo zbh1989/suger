@@ -114,6 +114,12 @@ class Api {
   /// 清理历史聊天记录
   static const String CHAT_HIS_CLEAR = "api/user/msg/flush";
 
+  /// 绑定手机号码
+  static const String BIND_PHONE = "api/user/bind/phone";
+
+  /// 查询推广用户
+  static const String SUBORDINATE_USER = "api/user/subordinateUser";
+
   static const String API_URL = "";
 
 }

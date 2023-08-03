@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:caihong_app/pages/vipChargeHisPage.dart';
 import 'package:caihong_app/pages/watchVideoPage.dart';
 import 'package:caihong_app/presenter/MyVipPagePresenter.dart';
@@ -378,6 +380,9 @@ class MyVipPageState extends BaseState<MyVipPage,MyVipPagePresenter>{
 
     //播放数
     int playNum = item['playNum'];
+    if(playNum == null || playNum == 0){
+      playNum = Random().nextInt(20000) + 2000;
+    }
 
     // 视频标签;#分割
     String tags = item['tags'];

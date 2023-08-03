@@ -99,7 +99,24 @@ class TopicDetailPageState extends BaseState<TopicDetailPage,TopicDetailPagePres
       ),
     );
 
-    list.add(headerTopic);
+    list.add(Stack(
+      children: [
+        headerTopic,
+        Positioned(
+          left: 5,
+          top: 5,
+          child: GestureDetector(
+            onTap: (){
+              Navigator.of(context).pop();
+            },
+            child: Container(
+              color: Colors.black87,
+              child: Icon(Icons.chevron_left_outlined,),
+            ),
+          ),
+        ),
+      ],
+    ));
 
     list.add(Container(
       margin: EdgeInsets.only(top: 18,left: 20),

@@ -327,51 +327,6 @@ Map<String,dynamic> getSearchPageInfo(){
 
 
 /**
- * 查询充值金币历史记录
- */
-List<Map<String,dynamic>> getChargeGoldHis(int pageNum,int pageSize,int userId){
-  return [
-    {
-      'dateTime': '2023-11-20 11:45',
-      'gold': 1180,
-    },
-    {
-      'dateTime': '2023-11-20 11:45',
-      'gold': 2280,
-    },
-    {
-      'dateTime': '2023-11-20 11:45',
-      'gold': 3380,
-    },
-    {
-      'dateTime': '2023-11-20 11:45',
-      'gold': 1180,
-    },
-    {
-      'dateTime': '2023-11-20 11:45',
-      'gold': 2280,
-    },
-    {
-      'dateTime': '2023-11-20 11:45',
-      'gold': 3380,
-    },
-    {
-      'dateTime': '2023-11-20 11:45',
-      'gold': 1180,
-    },
-    {
-      'dateTime': '2023-11-20 11:45',
-      'gold': 2280,
-    },
-    {
-      'dateTime': '2023-11-20 11:45',
-      'gold': 3380,
-    },
-  ];
-}
-
-
-/**
  * 充值金币
  */
 List<Map<String,dynamic>> getChargeData(){
