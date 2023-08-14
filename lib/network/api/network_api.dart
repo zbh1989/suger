@@ -22,7 +22,7 @@ class Api {
   static const String HOST_URL = "http://api.yssps.vip/"; /// http://206.238.76.51:10001/
 
   /// 服务器域名
-  static const String WS_HOST_URL = "ws://206.238.76.51:10001/";
+  static const String WS_HOST_URL = "ws://api.yssps.vip/"; // ws://206.238.76.51:10001/
 
   /// 本地测试
   static const String LOCAL_WEBSOCKET_URL = "ws://192.168.43.112:81/api/websocket/";

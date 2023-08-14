@@ -177,7 +177,7 @@ class ChargeGoldPagePresenter extends BasePresenter<ChargeGoldPageState>{
    */
   String getPayType(int type){
     if(type == 1){
-      return 'alipay';
+      return 'alipayH5';
     }else if(type == 2){
       return 'wechat';
     }else {
