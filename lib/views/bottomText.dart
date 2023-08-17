@@ -61,7 +61,7 @@ Map<String,dynamic> getImgUrl(TikTokPageTag tag,bool isSelect){
       break;
     case TikTokPageTag.topic:
       imgUrl = isSelect ? 'lib/assets/images/topic_2_active.png' : 'lib/assets/images/topic_2_inactive.png';
-      title = '专题';
+      title = '女优';
       imgWidth = 14.96;
       imgHeight = 14.96;
       break;
