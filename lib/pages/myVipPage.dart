@@ -28,17 +28,23 @@ class MyVipPageState extends BaseState<MyVipPage,MyVipPagePresenter>{
 
   String endVipDate = '1990-1-1';
 
+  String username;
+
   //自定义 RefreshIndicatorState 类型的 Key
   final GlobalKey<RefreshIndicatorState> _refreshKey = GlobalKey();
 
   @override
-  void initState(){
-    PreferenceUtils.instance.getString("endVipDate").then((val){
-      if(mounted && val != null){
-        setState(() {
-          endVipDate = val;
-        });
-      }
+  void initState() {
+
+    Future.wait([
+      PreferenceUtils.instance.getString("endVipDate").then((val){
+        endVipDate = val;
+      }),
+      /// 用户名
+      PreferenceUtils.instance.getString("username").then((value) => username = value),
+
+    ]).then((res) => {
+      setState(() {}),
     });
 
     initData();
@@ -154,7 +160,7 @@ class MyVipPageState extends BaseState<MyVipPage,MyVipPagePresenter>{
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text('隔壁老王',style: TextStyle(fontSize: 16,fontWeight:FontWeight.bold,fontFamily: 'PingFang SC-Bold',color: Color(0xFFFFD96B)),),
+                          Text(username??'隔壁老王',style: TextStyle(fontSize: 16,fontWeight:FontWeight.bold,fontFamily: 'PingFang SC-Bold',color: Color(0xFFFFD96B)),),
                           SizedBox(width: 8,),
                           Image.asset('lib/assets/images/myvip/vip_log.png',width: 30,height: 30,)
                         ],

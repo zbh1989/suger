@@ -177,6 +177,8 @@ class BasePresenter<V extends IBaseView> {
               PreferenceUtils.instance.saveInteger("checkNum", userInfo['checkNum']); // 连续签到天数
               PreferenceUtils.instance.saveString("endVipDate", userInfo['endVipDate']); // VIP 过期时间; yyyy-MM-dd
               PreferenceUtils.instance.saveInteger("endVipDateNum", userInfo['endVipDateNum']); // 剩余VIP天数
+              PreferenceUtils.instance.saveString("username", userInfo['username']); // 用户名
+
               if(callback != null) {
                 callback();
               }

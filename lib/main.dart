@@ -87,7 +87,7 @@ class SplashScreen extends StatefulWidget {
   SplashScreenState createState() => new SplashScreenState();
 }
 
-class SplashScreenState extends BaseState<SplashScreen,SplashScreenPresenter>  with AutomaticKeepAliveClientMixin{
+class SplashScreenState extends BaseState<SplashScreen,SplashScreenPresenter> /* with AutomaticKeepAliveClientMixin*/{
   Timer _timer;
 
   List dataList = [];
