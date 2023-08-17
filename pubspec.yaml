@@ -167,6 +167,8 @@ dependencies:
   screen_brightness: ^0.0.2
   ### 本地通知
   flutter_local_notifications: ^15.0.0
+  ### 获取通讯录
+  ###easy_contact_picker: ^0.0.2
 
 
 dev_dependencies:
