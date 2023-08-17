@@ -10,13 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import '../network/api/network_api.dart';
 import '../utils/PreferenceUtils.dart';
-import '../utils/alertDialogUtil.dart';
-import '../utils/dialogUtil.dart';
+import '../utils/messageUtils.dart';
+import '../views/bindPhonePage.dart';
 import '../views/tiktokTabBar.dart';
 import '../views/versionInfo.dart';
 import 'blankPage.dart';
 import 'buyVipPage.dart';
 import 'chargePage.dart';
+import 'chatDetailPage.dart';
 import 'homePage.dart';
 import 'loginPage.dart';
 import 'myBuyVideoPage.dart';
@@ -48,14 +49,22 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
   int vipStatus;
   int cronNum;
   String userId;
-
   String version;
+  int hasMsg;
+  String endVipDate;
 
   @override
   void initState() {
     super.initState();
     // mPresenter.checkLoginStatus();
     getUserInfo();
+    MessageUtils.notifyMsg = (update){
+      setState(() {
+        if(update && mounted){
+          hasMsg = 1;
+        }
+      });
+    };
   }
 
   void getUserInfo() async {
@@ -73,10 +82,21 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
         cronNum = val;
       }),
 
+      /// 是否有未读消息，1： 有，其它没有
+      PreferenceUtils.instance.getInteger('hasMsg').then((val){
+        hasMsg = val;
+      }),
+
       /// 当前用户的ID
       PreferenceUtils.instance.getString('userId').then((val){
         userId = val;
       }),
+
+    PreferenceUtils.instance.getString("endVipDate").then((val){
+      if(mounted && val != null){
+        endVipDate = val;
+      }
+    }),
 
       PackageInfo.fromPlatform().then((val) {
         version = val.version.split('.')[2];//获取当前的版本号
@@ -132,22 +152,24 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
               ),
             ),
             child: ClipOval(
-              child:Image.asset('lib/assets/images/avator/001.webp',fit:BoxFit.cover,)
+              child:Image.asset('lib/assets/images/head_icon.gif',fit:BoxFit.cover,)
             ),
           ),
 
           Expanded(
             child: Container(
               width: 140,
-              height: 50,
+              height: 70,
               margin: EdgeInsets.only(left: 10),
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('千歌未央',style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold,fontFamily: 'PingFang SC-Bold',color: Color(0xFFFFFFFF)),),
-                  SizedBox(height: 10),
+                  Text('隔壁老王',style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold,fontFamily: 'PingFang SC-Bold',color: Color(0xFFFFFFFF)),),
+                  SizedBox(height: 5),
                   Text('ID: $userId',style: TextStyle(fontSize: 12,fontWeight:FontWeight.w400,fontFamily: 'PingFang SC-Medium',color: Color(0x80FFFFFF)),),
+                  SizedBox(height: vipStatus == 0 ? 0 : 5),
+                  vipStatus == 0 ? Container() : Text('会员到期: $endVipDate',style: TextStyle(fontSize: 12,fontWeight:FontWeight.w400,fontFamily: 'PingFang SC-Medium',color: Color(0x80FFFFFF)),),
                 ],
               ),
             ),
@@ -173,7 +195,7 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
             ),
             child: GestureDetector(
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder:(ctx)=>Blank()));
+                Navigator.of(context).push(MaterialPageRoute(builder:(ctx)=>BindPhonePage()));
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -433,8 +455,29 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
     );
     widgetList.add(mineModule);
 
-    // 我的购买 下载缓存 填写邀请码 填写兑换码 帮助反馈 官方交流群
+    // 联系我们 我的购买 下载缓存 填写邀请码 填写兑换码 帮助反馈 官方交流群 版本信息
     List<Widget> itemList = [
+      GestureDetector(
+        onTap: (){
+          hasMsg = 0;
+          Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>ChatDetailPage(userId:userId),));
+        },
+        child: ListTile(
+          leading: Icon(Icons.ring_volume,size: 20,color: Colors.white70,),
+          title: Row(
+            children: [
+              Text('联系我们'),
+              SizedBox(width: 5,),
+              hasMsg == 1 ? Image.asset('lib/assets/images/red_circle.png',height: 8,width: 8,) : Container(),
+            ],
+          ),
+          trailing: Image.asset('lib/assets/images/next.png',width: 18,height: 18,),
+        ),
+      ),
+      Container(
+        child: Divider(height: 1.0,indent: 0.0,color: Color(0x33FFFFFF),),
+      ),
+
       GestureDetector(
         onTap: (){
           Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>MyBuyVideoPage(),));

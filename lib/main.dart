@@ -7,6 +7,7 @@ import 'package:caihong_app/pages/shortVideoPage.dart';
 import 'package:caihong_app/pages/swiperPage.dart';
 import 'package:caihong_app/presenter/splashScreenPresenter.dart';
 import 'package:caihong_app/style/style.dart';
+import 'package:caihong_app/views/TimerWidget.dart';
 import 'package:caihong_app/views/openVipDialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '彩虹视频',
+      title: '颜射视频',
       // color: Color(0xF703165E), // 0xF7050D2C
       theme: ThemeData(
         brightness: Brightness.dark,
@@ -79,6 +80,9 @@ class MyApp extends StatelessWidget {
  * 启动后广告加载
  */
 class SplashScreen extends StatefulWidget {
+
+  final int duration = 3;
+
   @override
   SplashScreenState createState() => new SplashScreenState();
 }
@@ -92,7 +96,7 @@ class SplashScreenState extends BaseState<SplashScreen,SplashScreenPresenter> {
 
   startTime() async {
     //设置启动图生效时间
-    var _duration = new Duration(seconds: 5);
+    var _duration = new Duration(seconds: widget.duration);
     _timer = new Timer(_duration, navigationPage);
     return _timer;
   }
@@ -154,7 +158,16 @@ class SplashScreenState extends BaseState<SplashScreen,SplashScreenPresenter> {
       );
     }
     return new Scaffold(
-      body: body,
+      body: Stack(
+        children: [
+          body,
+          Positioned(
+            right: 20,
+            top: 28,
+            child: TimerWidget(sec: widget.duration,)
+          ),
+        ],
+      ),
     );
   }
 

@@ -1,103 +1,94 @@
-import 'dart:convert' as convert;
-import 'dart:io';
-
 import 'package:caihong_app/base/view/base_state.dart';
-import 'package:caihong_app/bean/chatMessageModel.dart';
 import 'package:caihong_app/presenter/chatpagedetail_presenter.dart';
-import 'package:caihong_app/utils/log_utils.dart';
-import 'package:caihong_app/utils/userStatic.dart';
+import 'package:caihong_app/utils/toast.dart';
 import 'package:flutter/material.dart';
+import '../utils/PreferenceUtils.dart';
+import '../utils/messageUtils.dart';
+import '../views/chat_scroll_physics.dart';
 
 class ChatDetailPage extends StatefulWidget {
-  final String name;
+  final String userId;
   final String userImageUrl;
   final bool groupType;
 
-  const ChatDetailPage({Key key, this.name, this.userImageUrl, this.groupType})
+  const ChatDetailPage({Key key, this.userId, this.userImageUrl, this.groupType})
       : super(key: key);
 
   @override
   ChatDetailPageState createState() => ChatDetailPageState();
 }
 
-class ChatDetailPageState
-    extends BaseState<ChatDetailPage, ChatPageDetailPresenter> {
-  TextEditingController _controller = new TextEditingController();
+class ChatDetailPageState extends BaseState<ChatDetailPage, ChatPageDetailPresenter> {
+  final TextEditingController _controller = new TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  final FocusNode _focusNode = FocusNode();
 
-  WebSocket _webSocket;
+  bool _isLoading = false;
 
   String onlineStatus = "";
 
-  showMessageDetail(List<Map<String, dynamic>> maps) {
-    UserMessage.messages.clear();
-    UserMessage.messages = [];
-    setState(() {
-      maps.forEach((element) {
-        if (element["from_user"] == element["to_user"]) return;
-        UserMessage.messages.add(ChatMessage(
-            messageContent: element["im_msg"],
-            messageType: element["message_type"],
-            fromUser: element["from_user"],
-            toUser: element["to_user"],
-            recordTime: element["update_time"]));
-        UserMessage.messages
-            .sort((left, right) => right.recordTime.compareTo(left.recordTime));
-      });
-    });
-  }
+  int page = 1;
 
+  int limit  = 30;
 
-  void closeSocket() {
-    _webSocket.close();
-  }
-
-  // 向服务器发送消息
-  void sendMessage(dynamic message) {
-    print(convert.jsonEncode(message));
-    _webSocket.add(convert.jsonEncode(message));
-  }
+  int lastId = 0;
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
-    closeSocket();
+    MessageUtils.onMsgCallback = null;
   }
 
   @override
   void initState() {
+    PreferenceUtils.instance.saveInteger('hasMsg', 0);
+    MessageUtils.onMsgCallback = (){
+      if(mounted){
+        setState(() {
+
+        });
+      }
+    };
+    super.initState();
+    _scrollController.addListener(scrollListener);
+    _focusNode.addListener(textFocusListener);
+    // connect();
   }
 
-  void setSessionID(String id) {
-    Log.i("用户session:" + id);
-    if (widget.name == "1000000") {
-      UserMessage.sessionID = "1000000";
-    } else {
-      UserMessage.sessionID = id;
+  void refreshData(List list){
+    _isLoading = false;
+    if(list != null && list.length > 0 && mounted){
+      setState(() {
+        MessageUtils.messageList.addAll(list);
+      });
+    }else{
+      Toast.tips('没有更多消息了');
     }
-    setState(() {
-      if (id.isNotEmpty && id != "null") {
-        this.onlineStatus = "在线";
-      } else {
-        this.onlineStatus = "离线";
+  }
+
+  void scrollListener() {
+    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent) {
+      if (_isLoading) return;
+      if(!_isLoading) {
+        mPresenter.getChatHisList(MessageUtils.messageList[MessageUtils.messageList.length - 1]['id'],widget.userId,page++,limit);
       }
-    });
+      _isLoading = true;
+    }
+  }
+
+  void textFocusListener() {
+    _scrollController.animateTo(0.0,
+        duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
   }
 
   void sendMsg() {
-    var message = {
-      "msg": _controller.text,
-      "toUser": UserMessage.sessionID,
-      "type": widget.groupType ? 0 : 1
-    };
-    sendMessage(message);
-    mPresenter.addMessage(widget.name, _controller.text, 0);
+    MessageUtils.sendMessage(_controller.text);
     _controller.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    Widget body = Scaffold(
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -109,7 +100,12 @@ class ChatDetailPageState
               children: <Widget>[
                 IconButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.of(context).pop();
+                    /*Navigator.pushAndRemoveUntil(
+                      context,
+                      new MaterialPageRoute(builder: (context) => HomePage(type: TikTokPageTag.me),),
+                          (route) => route == null,
+                    );*/
                   },
                   icon: const Icon(
                     Icons.arrow_back,
@@ -119,12 +115,12 @@ class ChatDetailPageState
                 const SizedBox(
                   width: 2,
                 ),
-                Image.asset(
+                /*Image.asset(
                   "lib/assets/images/icon_head.png",
-                  width: 40,
-                  height: 40,
+                  width: 20,
+                  height: 20,
                   fit: BoxFit.cover,
-                ),
+                ),*/
                 const SizedBox(
                   width: 12,
                 ),
@@ -134,7 +130,7 @@ class ChatDetailPageState
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        widget.name,
+                        widget.userId,
                         style: TextStyle(
                             fontSize: 16,
                             color: Colors.black,
@@ -159,28 +155,34 @@ class ChatDetailPageState
       body: Stack(
         children: <Widget>[
           ListView.builder(
-            itemCount: UserMessage.messages.length,
+            itemCount: MessageUtils.messageList.length,
             reverse: true,
+            controller: _scrollController,
+            physics: ChatScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             padding: const EdgeInsets.only(bottom: 100),
             itemBuilder: (context, index) {
               return Container(
                 padding: const EdgeInsets.only(
-                    left: 14, right: 14, top: 10, bottom: 10),
+                    left: 14, right: 14, top: 6, bottom: 6),
                 child: Align(
-                    alignment: (UserMessage.messages[index].messageType == 1
+                    alignment: (MessageUtils.messageList[index]['status'] == 2
                         ? Alignment.topLeft
                         : Alignment.topRight),
                     child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: (UserMessage.messages[index].messageType == 1
+                          color: (MessageUtils.messageList[index]['status'] == 2
                               ? Colors.white
                               : Colors.green),
                         ),
-                        padding: const EdgeInsets.all(16),
-                        child: Text(
-                          UserMessage.messages[index].messageContent,
-                          style: TextStyle(fontSize: 15, color: Colors.black),
+                        padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+                        child: Column(
+                          crossAxisAlignment: MessageUtils.messageList[index]['status'] == 2 ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+                          children: [
+                            Text(MessageUtils.messageList[index]['createTime'],style: TextStyle(fontSize: 10, color: Color(0x80000000)),),
+                            SizedBox(height: 5,),
+                            Text(MessageUtils.messageList[index]['content'],style: TextStyle(fontSize: 15, color: Colors.black),)
+                          ],
                         ))),
               );
             },
@@ -194,7 +196,7 @@ class ChatDetailPageState
               color: Colors.white,
               child: Row(
                 children: <Widget>[
-                  GestureDetector(
+                  /*GestureDetector(
                     onTap: () {},
                     child: Container(
                       height: 30,
@@ -209,7 +211,7 @@ class ChatDetailPageState
                         size: 20,
                       ),
                     ),
-                  ),
+                  ),*/
                   const SizedBox(
                     width: 15,
                   ),
@@ -228,7 +230,7 @@ class ChatDetailPageState
                   ),
                   FloatingActionButton(
                     onPressed: () {
-                      // mPresenter.getSessionIDByUser(widget.name, false);
+                      sendMsg();
                     },
                     child: const Icon(
                       Icons.send,
@@ -244,6 +246,19 @@ class ChatDetailPageState
           ),
         ],
       ),
+    );
+
+    return WillPopScope(
+      onWillPop: (){
+        Navigator.of(context).pop();
+        /*Navigator.pushAndRemoveUntil(
+          context,
+          new MaterialPageRoute(builder: (context) => HomePage(type: TikTokPageTag.me),),
+              (route) => route == null,
+        );*/
+        return Future(() => true);
+      },
+      child: body,
     );
   }
 

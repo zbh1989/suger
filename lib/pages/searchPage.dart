@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:caihong_app/mock/homePageData.dart';
 import 'package:caihong_app/pages/watchVideoPage.dart';
 import 'package:flutter/material.dart';
@@ -415,6 +417,9 @@ class SearchPageState extends BaseState<SearchPage,SearchPagePresenter> {
     int likeNum = item['likeNum'];
     //播放数
     int playNum = item['playNum'];
+    if(playNum == null || playNum == 0){
+      playNum = Random().nextInt(20000) + 2000;
+    }
     // 视频标签;#分割
     String tags = item['tags'];
 
@@ -427,7 +432,7 @@ class SearchPageState extends BaseState<SearchPage,SearchPagePresenter> {
     int videoStartTime = item['videoStartTime'];
 
     //视频图片
-    return VideoImg(imgUrl:imgUrl,imgWidth:imgWidth,imgHeight:imgHeight,duration:duration,showLevel:showLevel,gold: gold,desc:desc,videoId:videoId,
+    return VideoImg(imgUrl:imgUrl,imgWidth:imgWidth,imgHeight:imgHeight,duration:duration,showLevel:showLevel,gold: gold,desc:desc,videoId:videoId,playNum: playNum,
         onTapPlayer:(){
           //处理点击事件
           Navigator.of(context).push(
@@ -747,6 +752,9 @@ class HaveSearchResultState extends State<HaveSearchResult> {
     int likeNum = item['likeNum'];
     //播放数
     int playNum = item['playNum'];
+    if(playNum == null || playNum == 0){
+      playNum = Random().nextInt(20000) + 2000;
+    }
     // 视频标签;#分割
     String tags = item['tags'];
 

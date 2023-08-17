@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui' as ui;
+import 'package:caihong_app/pages/spreadRecordListPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -110,13 +111,12 @@ class SharePageState extends BaseState<SharePage,SharePagePresenter>{
             child: Icon(Icons.chevron_left_outlined),
           ),
           Text('分享推广',style: TextStyle(fontFamily: 'PingFang SC-Bold',fontSize: 18,color: Color(0xFFFFFFFF),fontWeight: FontWeight.w400),),
-          /*GestureDetector(
+          GestureDetector(
             onTap: (){
-              // Navigator.of(context).push(MaterialPageRoute(builder:(ctx)=>SignHisPage()));
+              Navigator.of(context).push(MaterialPageRoute(builder:(ctx)=>SpreadRecordListPage()));
             },
-            child: Text('邀请记录',style: TextStyle(fontFamily: 'PingFang SC-Bold',fontSize: 16,color: Color(0xFFFFFFFF),fontWeight: FontWeight.w400),),
-          ),*/
-          SizedBox(),
+            child: Text('推广记录',style: TextStyle(fontFamily: 'PingFang SC-Bold',fontSize: 16,color: Color(0xFFFFFFFF),fontWeight: FontWeight.w400),),
+          ),
         ],
       ),
     );
@@ -150,7 +150,7 @@ class SharePageState extends BaseState<SharePage,SharePagePresenter>{
                 version: QrVersions.auto,
                 embeddedImage: logoIcon,
                 embeddedImageStyle: QrEmbeddedImageStyle(
-                  size: Size.square(30),
+                  size: Size.square(64),
                 ),
               ),
             ),

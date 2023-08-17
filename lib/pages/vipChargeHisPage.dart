@@ -46,13 +46,13 @@ class VipChargeHisPageState extends BaseState<VipChargeHisPage,VipChargeHisPrese
         isLoading = true;
       });
     }
-    List<Map<String,dynamic>> dataList = getChargeGoldHis(pageNum++,pageSize,1);
+    /*List<Map<String,dynamic>> dataList = getChargeGoldHis(pageNum++,pageSize,1);
     setState(() {
       isLoading = false;
       if(dataList.length > 0){
         chargeGoldDataList.addAll(dataList);
       }
-    });
+    });*/
   }
 
   @override

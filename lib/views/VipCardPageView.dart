@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 class VipCardPageView extends StatefulWidget {
 
-  VipCardPageView({this.getCardItemInfo,this.openPayDialog,});
+  VipCardPageView({this.dataList,this.getCardItemInfo,this.openPayDialog,});
 
   ValueChanged getCardItemInfo;
 
   VoidCallback openPayDialog;
+
+  final List dataList;
 
   @override
   VipCardPageViewState createState() => new VipCardPageViewState();
@@ -46,7 +48,7 @@ class VipCardPageViewState extends State<VipCardPageView> {
   @override
   void initState(){
     super.initState();
-    vipCardList = getVipCardInfo();
+    vipCardList = widget.dataList;
     list.clear();
     list.add(Padding(
       padding: EdgeInsets.symmetric(vertical: 0.0,horizontal: 8.0,),
@@ -155,8 +157,32 @@ class VipCardPageViewState extends State<VipCardPageView> {
 
 
 
-  List getVipCardInfo(){
-    return [
+  Color getVipCardColorInfo(int level){
+    Color c;
+    switch(level){
+      case 1:
+        c = Color(0xFF46454D);
+        break;
+      case 2:
+        c = Color(0xFF6B76B9);
+        break;
+      case 3:
+        c = Color(0xFF46454D);
+        break;
+      case 4:
+        c = Color(0xFF8F6536);
+        break;
+      case 5:
+        c = Color(0xFF51419A);
+        break;
+      case 6:
+        c = Color(0xFFFFD96B);
+        break;
+      default:
+        c = Colors.white60;
+    }
+    return c;
+    /*return [
       {
         'name':'三日体验卡',
         'money': 19,
@@ -199,7 +225,7 @@ class VipCardPageViewState extends State<VipCardPageView> {
         'cardUrl':'lib/assets/images/vip/superior_vip.png',
         'color':Color(0xFFFFD96B),
       },
-    ];
+    ];*/
   }
 
 }
@@ -239,7 +265,13 @@ class VipCardItem extends StatelessWidget {
          Positioned(
           left: 0,
           top: 0,
-          child: Image.asset(cardInfo['cardUrl'],height: imgHeight,width: imgWidth,fit: BoxFit.cover,),
+          child: Container(
+            decoration: BoxDecoration(
+              // color: Colors.green,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Image.network(cardInfo['icon'],height: imgHeight,width: imgWidth,fit: BoxFit.cover,),
+          )
         ),
         Positioned(
           left: 24.5,
@@ -250,16 +282,16 @@ class VipCardItem extends StatelessWidget {
               RichText(
                 text: TextSpan(
                     children: [
-                      TextSpan(text: '￥',style: TextStyle(fontFamily:'PingFang SC-Medium',color: cardInfo['color'],fontSize: 14,fontWeight: FontWeight.w400),),
-                      TextSpan(text: cardInfo['money'].toString(),style: TextStyle(fontFamily:'Swis721 BlkCn BT-Black',color: cardInfo['color'],fontSize: 32,fontWeight: FontWeight.bold),),
-                      TextSpan(text: '  原价:',style: TextStyle(fontFamily:'PingFang SC-Medium',color: cardInfo['color'],fontSize: 8,fontWeight: FontWeight.w400),),
-                      TextSpan(text: '￥'+ cardInfo['originalPrice'].toString(),style: TextStyle(fontFamily:'PingFang SC-Medium',color: cardInfo['color'],fontSize: 8,fontWeight: FontWeight.w400,decoration: TextDecoration.lineThrough,decorationStyle: TextDecorationStyle.solid,decorationColor: cardInfo['color']),),
+                      TextSpan(text: '￥',style: TextStyle(fontFamily:'PingFang SC-Medium',color: getVipCardColorInfo(cardInfo['levelNumber']),fontSize: 14,fontWeight: FontWeight.w400),),
+                      TextSpan(text: cardInfo['sellingPrice'].toString(),style: TextStyle(fontFamily:'Swis721 BlkCn BT-Black',color: getVipCardColorInfo(cardInfo['levelNumber']),fontSize: 32,fontWeight: FontWeight.bold),),
+                      TextSpan(text: '  原价:',style: TextStyle(fontFamily:'PingFang SC-Medium',color: getVipCardColorInfo(cardInfo['levelNumber']),fontSize: 8,fontWeight: FontWeight.w400),),
+                      TextSpan(text: '￥'+ cardInfo['price'].toString(),style: TextStyle(fontFamily:'PingFang SC-Medium',color: getVipCardColorInfo(cardInfo['levelNumber']),fontSize: 8,fontWeight: FontWeight.w400,decoration: TextDecoration.lineThrough,decorationStyle: TextDecorationStyle.solid,decorationColor: getVipCardColorInfo(cardInfo['levelNumber'])),),
                     ]
                 ),
                 textDirection: TextDirection.ltr,
               ),
 
-              Text('优惠价',style:TextStyle(fontFamily:'PingFang SC-Medium',color: cardInfo['color'],fontSize: 12,fontWeight: FontWeight.w400),),
+              Text('优惠价',style:TextStyle(fontFamily:'PingFang SC-Medium',color: getVipCardColorInfo(cardInfo['levelNumber']),fontSize: 12,fontWeight: FontWeight.w400),),
             ],
           ),
         ),
@@ -272,6 +304,34 @@ class VipCardItem extends StatelessWidget {
       },
       child: stack,
     );
+  }
+
+
+  Color getVipCardColorInfo(int level){
+    Color c;
+    switch(level){
+      case 1:
+        c = Color(0xFF46454D);
+        break;
+      case 2:
+        c = Color(0xFF6B76B9);
+        break;
+      case 3:
+        c = Color(0xFF46454D);
+        break;
+      case 4:
+        c = Color(0xFF8F6536);
+        break;
+      case 5:
+        c = Color(0xFF51419A);
+        break;
+      case 6:
+        c = Color(0xFFFFD96B);
+        break;
+      default:
+        c = Colors.white60;
+    }
+    return c;
   }
 
 

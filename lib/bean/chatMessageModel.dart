@@ -1,8 +1,5 @@
 /**
  * DESC: 聊天内容
- * Author：原哥
- * QQ: 2729404527
- * Email: 2729404527@qq.com
  */
 
 class ChatMessage {

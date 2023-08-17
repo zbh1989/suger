@@ -37,10 +37,23 @@ class BuyVipPageState extends BaseState<BuyVipPage,BuyVipPagePresenter> with Wid
 
   String orderNo;
 
+  List vipLevelList = [];
+
   @override
   void initState(){
     WidgetsBinding.instance.addObserver(this);
     super.initState();
+    mPresenter.queryVipLevelList();
+
+  }
+
+  void refreshData(List list){
+    if(list != null){
+      vipLevelList.clear();
+      setState(() {
+        vipLevelList.addAll(list);
+      });
+    }
   }
 
   @override
@@ -102,24 +115,26 @@ class BuyVipPageState extends BaseState<BuyVipPage,BuyVipPagePresenter> with Wid
     list.add(header);
 
     ///  滚动选择 充值卡
-    Widget vipCardPageViewWidget = GestureDetector(
-      child: Container(
-        margin: EdgeInsets.only(left: 28,top: 24.5),
-        child: VipCardPageView(getCardItemInfo:(map){
-          money = map['money'];
-        },
-        openPayDialog: (){
-          ///调用支付
-          /// 生成订单号
-          DateTime currentTime = DateTime.now();
-          int timeMills = currentTime.microsecondsSinceEpoch;
-          String orderNo = timeMills.toString() + Random().nextInt(1000).toString();
-          this.orderNo = orderNo;
-          showBottomFunction(orderNo) ;
-        },),
-      ),
-    );
-    list.add(vipCardPageViewWidget);
+    if(vipLevelList != null && vipLevelList.length > 0){
+      Widget vipCardPageViewWidget = GestureDetector(
+        child: Container(
+          margin: EdgeInsets.only(left: 28,top: 24.5),
+          child: VipCardPageView(dataList:vipLevelList,getCardItemInfo:(map){
+            money = int.parse(map['sellingPrice']);
+          },
+            openPayDialog: (){
+              ///调用支付
+              /// 生成订单号
+              DateTime currentTime = DateTime.now();
+              int timeMills = currentTime.microsecondsSinceEpoch;
+              String orderNo = timeMills.toString() + Random().nextInt(1000).toString();
+              this.orderNo = orderNo;
+              showBottomFunction(orderNo) ;
+            },),
+        ),
+      );
+      list.add(vipCardPageViewWidget);
+    }
 
     /// member benefits
     Widget memberBenefitsTitle = Container(
@@ -274,7 +289,7 @@ class BuyVipPageState extends BaseState<BuyVipPage,BuyVipPagePresenter> with Wid
       SizedBox(height: 18,),
 
       ///评论发布
-      Container(
+      /*Container(
         width: 280,
         height: 55,
         // color: Colors.red,
@@ -296,10 +311,10 @@ class BuyVipPageState extends BaseState<BuyVipPage,BuyVipPagePresenter> with Wid
         ),
       ),
 
-      SizedBox(height: 18,),
+      SizedBox(height: 18,),*/
 
       ///轮盘畅玩
-      Container(
+      /*Container(
         width: 280,
         height: 55,
         // color: Colors.red,
@@ -321,10 +336,10 @@ class BuyVipPageState extends BaseState<BuyVipPage,BuyVipPagePresenter> with Wid
         ),
       ),
 
-      SizedBox(height: 18,),
+      SizedBox(height: 18,),*/
 
       ///试试手气
-      Container(
+      /*Container(
         width: 280,
         height: 55,
         // color: Colors.red,
@@ -346,10 +361,10 @@ class BuyVipPageState extends BaseState<BuyVipPage,BuyVipPagePresenter> with Wid
         ),
       ),
 
-      SizedBox(height: 18,),
+      SizedBox(height: 18,),*/
 
       ///每日折扣
-      Container(
+      /*Container(
         width: 280,
         height: 55,
         // color: Colors.red,
@@ -371,10 +386,10 @@ class BuyVipPageState extends BaseState<BuyVipPage,BuyVipPagePresenter> with Wid
         ),
       ),
 
-      SizedBox(height: 18,),
+      SizedBox(height: 18,),*/
 
       ///双倍奖励
-      Container(
+      /*Container(
         width: 280,
         height: 55,
         // color: Colors.red,
@@ -396,10 +411,10 @@ class BuyVipPageState extends BaseState<BuyVipPage,BuyVipPagePresenter> with Wid
         ),
       ),
 
-      SizedBox(height: 18,),
+      SizedBox(height: 18,),*/
 
       ///线路切换
-      Container(
+      /*Container(
         width: 280,
         height: 55,
         // color: Colors.red,
@@ -421,10 +436,10 @@ class BuyVipPageState extends BaseState<BuyVipPage,BuyVipPagePresenter> with Wid
         ),
       ),
 
-      SizedBox(height: 18,),
+      SizedBox(height: 18,),*/
 
       ///个性设置
-      Container(
+      /*Container(
         width: 280,
         height: 55,
         // color: Colors.red,
@@ -446,10 +461,10 @@ class BuyVipPageState extends BaseState<BuyVipPage,BuyVipPagePresenter> with Wid
         ),
       ),
 
-      SizedBox(height: 18,),
+      SizedBox(height: 18,),*/
 
       ///一键起飞
-      Container(
+      /*Container(
         width: 280,
         height: 55,
         // color: Colors.red,
@@ -472,7 +487,7 @@ class BuyVipPageState extends BaseState<BuyVipPage,BuyVipPagePresenter> with Wid
       ),
 
 
-      SizedBox(height: 18,),
+      SizedBox(height: 18,),*/
 
       ///全屏大图
       Container(
@@ -590,10 +605,9 @@ class BuyVipPageState extends BaseState<BuyVipPage,BuyVipPagePresenter> with Wid
 
     Widget benifitWidget = Stack(
       children: [
-
         Container(
           width: size.width - 40,
-          height: 1260,
+          height: 680,
           margin: EdgeInsets.only(left: 18,right: 20,top: 8),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
@@ -607,7 +621,7 @@ class BuyVipPageState extends BaseState<BuyVipPage,BuyVipPagePresenter> with Wid
                 stops: [0.1, 0.9],
               ),
               image: DecorationImage(
-                image: AssetImage('lib/assets/images/vip/buy_vip_background.png'),
+                image: AssetImage('lib/assets/images/vip/buy_vip_background.png',),
                 fit: BoxFit.fill, // 完全填充
               )
           ),
@@ -812,54 +826,6 @@ class BuyVipPageState extends BaseState<BuyVipPage,BuyVipPagePresenter> with Wid
       },),
     );
     return btm.build();
-  }
-
-
-  List getVipCardInfo(){
-    return [
-      {
-        'name':'三日体验卡',
-        'money': 19,
-        'originalPrice': 39.9,
-        'cardUrl':'lib/assets/images/vip/three_day_vip.png',
-        'color':Color(0xFF46454D),
-      },
-      {
-        'name':'周卡会员',
-        'money': 50,
-        'originalPrice': 72,
-        'cardUrl':'lib/assets/images/vip/week_vip.png',
-        'color':Color(0xFF6B76B9),
-      },
-      {
-        'name':'月卡会员',
-        'money': 88,
-        'originalPrice': 168,
-        'cardUrl':'lib/assets/images/vip/month_vip.png',
-        'color':Color(0xFF46454D),
-      },
-      {
-        'name':'季卡会员',
-        'money': 100,
-        'originalPrice': 300,
-        'cardUrl':'lib/assets/images/vip/season_vip.png',
-        'color':Color(0xFF8F6536),
-      },
-      {
-        'name':'年卡会员',
-        'money': 288,
-        'originalPrice': 1098,
-        'cardUrl':'lib/assets/images/vip/year_vip.png',
-        'color':Color(0xFF51419A),
-      },
-      {
-        'name':'至尊永久',
-        'money': 398,
-        'originalPrice': 1399,
-        'cardUrl':'lib/assets/images/vip/superior_vip.png',
-        'color':Color(0xFFFFD96B),
-      },
-    ];
   }
 
   @override

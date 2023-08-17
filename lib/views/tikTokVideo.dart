@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../utils/dialogUtil.dart';
+import 'openNewVipDialog.dart';
 
 ///
 /// TikTok风格的一个视频页组件，覆盖在video上，提供以下功能：
@@ -68,7 +69,7 @@ class TikTokVideoPageState extends State<TikTokVideoPage> {
 
   int defaultVideoStartTime = 0;
 
-  int defaultVideoEndTime = 30;
+  int defaultVideoEndTime = 10;
 
   bool _pauseOrStart = true;
 
@@ -285,7 +286,7 @@ class TikTokVideoPageState extends State<TikTokVideoPage> {
       builder: (context) {
         return DialogUtil(
           marginTop: (size.height + ei.top + ei.bottom - imgHeight)/2 + 30,
-          content: OpenVipDialog(),
+          content: OpenNewVipDialog(),
           onClose: (){Navigator.of(context).pop();},
         );
       },

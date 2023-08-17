@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart' as fluttertoast;
+import 'package:url_launcher/url_launcher.dart';
 import '../base/view/base_state.dart';
 import '../presenter/watchVideoPagePresenter.dart';
 import '../utils/PreferenceUtils.dart';
@@ -15,6 +16,7 @@ import '../utils/dialogUtil.dart';
 import '../utils/stringUtils.dart';
 import '../views/customFijkPanel.dart';
 import '../views/guessLikePage.dart';
+import '../views/openNewVipDialog.dart';
 import '../views/openVipDialog.dart';
 import '../views/tiktokTabBar.dart';
 import '../views/videoOperation.dart';
@@ -383,30 +385,37 @@ class WatchVideoPageState extends BaseState<WatchVideoPage,WatchVideoPagePresent
 
     /// 横幅广告图片
     Widget adWidget = Container(
-      height: 120,
+      height: width*120/335,
       alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(top: 38,left: 20,right: 20),
-      clipBehavior: Clip.hardEdge,
+      margin: EdgeInsets.only(top:18,left: 5,right: 5),
+      /*clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: GestureDetector(
-        child:Image.network('https://p0.itc.cn/q_70/images03/20220908/20795320961944e6a49b7bd5cf68a07e.jpeg',
-          width: width,
-          fit: BoxFit.cover,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+          bottomLeft: Radius.circular(18),
+          bottomRight: Radius.circular(18),
         ),
+      ),*/
+      child: GestureDetector(
         onTap: (){
           player.release();
-          Navigator.push(context, MaterialPageRoute(
-              fullscreenDialog: false,
-              builder: (context){
-                return ShowSwiperPage('https://p0.itc.cn/q_70/images03/20220908/20795320961944e6a49b7bd5cf68a07e.jpeg');
-              }
-          ));
+          /**
+           * 打开网页地址
+           */
+          String url = 'https://fds.bjbsst.com';
+          canLaunch(url).then((canOpen){
+            if(canOpen){
+              launch(url);
+            }else{
+              Toast.show('无法打开网页地址: $url');
+            }
+          });
         },
+        child:Image.asset('lib/assets/images/ad_watch_page.png',width: width,fit: BoxFit.cover,),
       ),
     );
-    // list.add(adWidget);
+    list.add(adWidget);
 
     /// 猜你喜欢
     Widget guessLikeWidget = GuessLikePage(showType: 1,dataList: guessLikeList,player: player,reloadData: reloadData,);
@@ -581,7 +590,7 @@ class WatchVideoPageState extends BaseState<WatchVideoPage,WatchVideoPagePresent
       builder: (context) {
         return DialogUtil(
           marginTop: 30,
-          content: OpenVipDialog(),
+          content: OpenNewVipDialog(),
           onClose: (){Navigator.of(context).pop();},
         );
       },

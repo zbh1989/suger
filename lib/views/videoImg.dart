@@ -17,7 +17,7 @@ class VideoImg extends StatelessWidget {
     this.gold : 0,
     this.desc : '',
     this.onTapPlayer,
-    this.playNum:27876
+    this.playNum
   }) : super(key: key);
   final double imgWidth;
   final double imgHeight;
@@ -49,7 +49,10 @@ class VideoImg extends StatelessWidget {
             height: imgHeight,
             fit: BoxFit.cover,
             errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-              return Image.asset('lib/assets/images/logo.png',width: imgWidth,height: imgHeight,fit: BoxFit.cover,);
+              return Opacity(
+                opacity: 0.3,
+                child: Image.asset('lib/assets/images/logo.png',width: imgWidth * 0.5,height: imgHeight * 0.5,),
+              );
             },
           ),
         ),
@@ -66,7 +69,7 @@ class VideoImg extends StatelessWidget {
               children: [
                 Icon(Icons.remove_red_eye,size: 12,color: Color(0xFFFFFFFF),),
                 SizedBox(width: 5,),
-                Text((Random().nextInt(1000) + playNum).toString(),style: TextStyle(fontSize: 12,fontFamily: 'PingFang SC-Medium',color: Color(0xFFFFFFFF),fontWeight: FontWeight.w400,),)
+                Text(playNum.toString(),style: TextStyle(fontSize: 12,fontFamily: 'PingFang SC-Medium',color: Color(0xFFFFFFFF),fontWeight: FontWeight.w400,),)
               ],
             ),
           ),

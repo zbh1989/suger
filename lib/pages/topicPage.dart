@@ -2,7 +2,9 @@ import 'package:caihong_app/presenter/topicPage_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import '../base/view/base_state.dart';
+import '../views/tiktokTabBar.dart';
 import '../views/topicImg.dart';
+import 'homePage.dart';
 
 /**
  * 专题首页
@@ -89,7 +91,23 @@ class TopicPageState extends BaseState<TopicPage, TopicPagePresenter>{
     Widget topicWidget = Container(
       alignment: Alignment.center,
       margin: EdgeInsets.only(top: 14),
-      child: Text('专题',style: TextStyle(fontSize: 18,fontFamily: 'PingFang SC-Bold',color: Color(0xFFFFFFFF),fontWeight: FontWeight.w400),),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            onTap: (){
+              Navigator.pushAndRemoveUntil(
+                context,
+                new MaterialPageRoute(
+                    builder: (context) => new HomePage(type: TikTokPageTag.firstPage)),
+                    (route) => route == null,
+              );
+            },
+            child: Icon(Icons.chevron_left_outlined,),
+          ),
+          Text('专题',style: TextStyle(fontSize: 18,fontFamily: 'PingFang SC-Bold',color: Color(0xFFFFFFFF),fontWeight: FontWeight.w400),),
+          Container(),
+        ],),
     );
     list.add(topicWidget);
 

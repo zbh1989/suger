@@ -22,9 +22,9 @@ class ChatPagePresenter extends BasePresenter<ChatPageState> {
   Future initChatInfo(String res) async {
     await DBManager.instance.initDB();
     Future<String> result =
-        PreferenceUtils.instance.getString("username", null);
+        PreferenceUtils.instance.getString("userId", null);
     result.then((value) async {
-      if (res != "1") {
+      if (res == "1") {
         Map<String, dynamic> map = {};
         map["from_user"] = "13888888888";
         map["to_user"] = value;

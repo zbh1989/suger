@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:caihong_app/pages/searchBar.dart';
 import 'package:caihong_app/pages/watchVideoPage.dart';
 import 'package:flutter/cupertino.dart';
@@ -206,6 +208,9 @@ class MenuTopPageState extends BaseState<MenuTopicPage,MenuTopicPagePresenter> w
 
       //播放数
       int playNum = data['playNum'];
+      if(playNum == null || playNum == 0){
+        playNum = Random().nextInt(20000) + 2000;
+      }
 
       // 时长
       String duration = data['duration'];
@@ -222,7 +227,7 @@ class MenuTopPageState extends BaseState<MenuTopicPage,MenuTopicPagePresenter> w
       int videoStartTime = data['videoStartTime'];
 
       // 视频图片
-      Widget view = VideoImg(imgUrl:imgUrl,imgWidth:(isMain || widget.showType == 2) ? bigImgWidth : imgWidth,imgHeight:(isMain || widget.showType == 2) ? bigImgHeight : imgHeight,duration:duration,showLevel:showLevel,gold: gold,desc:desc,videoId:videoId,
+      Widget view = VideoImg(imgUrl:imgUrl,imgWidth:(isMain || widget.showType == 2) ? bigImgWidth : imgWidth,imgHeight:(isMain || widget.showType == 2) ? bigImgHeight : imgHeight,duration:duration,showLevel:showLevel,gold: gold,desc:desc,videoId:videoId,playNum: playNum,
         onTapPlayer: (){
           //处理点击事件
           Navigator.of(context).push(

@@ -51,11 +51,18 @@ class OpenVipDialog extends StatelessWidget {
           child: GestureDetector(
             onTap: (){
               // 跳转到VIP 充值页面
-              Navigator.pushAndRemoveUntil(
+              /*Navigator.pushAndRemoveUntil(
                 context,
                 new MaterialPageRoute(builder: (context) => BuyVipPage()),
                     (route) => route == null,
-              );
+              );*/
+
+              Navigator.push(context, MaterialPageRoute(
+                  fullscreenDialog: false,
+                  builder: (context){
+                    return BuyVipPage();
+                  }
+              ));
 
             },
             child: Container(

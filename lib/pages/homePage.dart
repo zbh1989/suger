@@ -10,11 +10,13 @@ import 'package:caihong_app/pages/topicPage.dart';
 import 'package:caihong_app/pages/userPage.dart';
 import 'package:caihong_app/presenter/home_presenter.dart';
 import 'package:caihong_app/utils/dialogUtil.dart';
+import 'package:caihong_app/utils/messageUtils.dart';
 import 'package:caihong_app/views/tikTokScaffold.dart';
 import 'package:caihong_app/views/tiktokTabBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../utils/PreferenceUtils.dart';
 import '../views/tikTokHeader.dart';
 import 'menuTopicPage.dart';
 import 'newFirstPage.dart';
@@ -81,8 +83,6 @@ class HomePageState extends BaseState<HomePage, HomePresenter>
 
   List<UserVideo> videoDataList = [];
 
-  WebSocket _webSocket;
-
   int pageNumber = 1;
 
   String advoceMsg = '';
@@ -91,7 +91,7 @@ class HomePageState extends BaseState<HomePage, HomePresenter>
 
 
   void closeSocket() {
-    _webSocket.close();
+    MessageUtils.closeSocket();
   }
 
   /*@override
@@ -108,25 +108,31 @@ class HomePageState extends BaseState<HomePage, HomePresenter>
     super.dispose();
   }*/
 
+  @override
+  void dispose() {
+    super.dispose();
+    closeSocket();
+  }
 
   @override
   void initState() {
-
-
      WidgetsBinding.instance.addPostFrameCallback((_) {
        if(widget.isLoaded != null && widget.isLoaded){
-         Size size = MediaQuery.of(context).size;
-         EdgeInsets ei = MediaQuery.of(context).padding;
-         // Toast.show('首页加载完成，页面初始高度' + (size.height + ei.top + ei.bottom).toString());
 
          /// 检测更新版本
          checkUpdateVersion.check();
 
          /// 公告弹窗
          showAdvoce(advoceMsg);
-
        }
     });
+
+     if(MessageUtils.webSocket == null){
+       /// 当前用户的ID
+       PreferenceUtils.instance.getString('userId').then((userId){
+         MessageUtils.connect(userId);
+       });
+     }
 
     if (widget.type != null) {
       tabBarType = widget.type;

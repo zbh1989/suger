@@ -293,6 +293,9 @@ class FirtPageVideoModuleState extends BaseState<FirstPageVideoModule,FirstPageV
 
       //播放数
       int playNum = data['playNum'];
+      if(playNum == null || playNum == 0){
+        playNum = Random().nextInt(20000) + 2000;
+      }
 
       // 时长
       String duration = data['duration'];
@@ -311,7 +314,7 @@ class FirtPageVideoModuleState extends BaseState<FirstPageVideoModule,FirstPageV
 
 
       // 视频图片
-      Widget view = VideoImg(imgUrl:imgUrl,imgWidth:isMain ? bigImgWidth : imgWidth,imgHeight:isMain ? bigImgHeight : imgHeight,duration:duration,showLevel:showLevel,gold: gold,desc:desc,videoId:videoId,
+      Widget view = VideoImg(imgUrl:imgUrl,imgWidth:isMain ? bigImgWidth : imgWidth,imgHeight:isMain ? bigImgHeight : imgHeight,duration:duration,showLevel:showLevel,gold: gold,desc:desc,videoId:videoId,playNum: playNum,
         onTapPlayer: (){
           //处理点击事件
           Navigator.of(context).push(

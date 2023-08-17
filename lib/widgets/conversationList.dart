@@ -27,7 +27,7 @@ class _ConversationListState extends State<ConversationList> {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context){
-          return ChatDetailPage(name:widget.name,userImageUrl:widget.imageUrl,groupType: widget.name=="1000000"?true:false);
+          return ChatDetailPage(userId:widget.name,userImageUrl:widget.imageUrl,groupType: widget.name=="1000000"?true:false);
         }));
       },
       child: Container(
@@ -37,12 +37,12 @@ class _ConversationListState extends State<ConversationList> {
             Expanded(
               child: Row(
                 children: <Widget>[
-                  Image.asset(
+                  /*Image.asset(
                     widget.imageUrl,
-                    width: 50,
-                    height: 50,
+                    width: 30,
+                    height: 30,
                     fit: BoxFit.cover,
-                  ),
+                  ),*/
                   const SizedBox(
                     width: 16,
                   ),

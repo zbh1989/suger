@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:caihong_app/views/videoImg.dart';
 import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
@@ -122,6 +124,9 @@ class GuessLikePageState extends BaseState<GuessLikePage,GuessLikePagePresenter>
 
     //播放数
     int playNum = item['playNum'];
+    if(playNum == null || playNum == 0){
+      playNum = Random().nextInt(20000) + 2000;
+    }
 
     // 视频标签;#分割
     String tags = item['tags'];
@@ -135,7 +140,7 @@ class GuessLikePageState extends BaseState<GuessLikePage,GuessLikePagePresenter>
 
 
     //视频图片
-    return VideoImg(imgUrl:imgUrl,imgWidth:imgWidth,imgHeight:imgHeight,duration:duration,showLevel:showLevel,gold: gold,desc:desc,videoId:videoId,
+    return VideoImg(imgUrl:imgUrl,imgWidth:imgWidth,imgHeight:imgHeight,duration:duration,showLevel:showLevel,gold: gold,desc:desc,videoId:videoId,playNum: playNum,
         onTapPlayer:(){
           widget.player.release();
           Navigator.of(context).pop();
