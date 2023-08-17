@@ -59,11 +59,26 @@ class TimerState extends State<TimerWidget>{
     return Container(
       width: 100,
       height: 25,
-      color: Colors.grey,
-      // decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+      // color: Colors.grey,
+      decoration: BoxDecoration(
+          color: Colors.grey,
+          borderRadius: BorderRadius.circular(12)
+      ),
       padding: EdgeInsets.symmetric(horizontal: 10,vertical: 2),
-      child: Text('倒计时 $currentTime 秒',style: TextStyle(fontSize: 12,color: Color(
-          0xDFF3673D)),),
+      child: Center(
+        child: RichText(
+          text: TextSpan(
+              children: [
+                TextSpan(text: "倒计时 ",style: TextStyle(fontFamily:'PingFang SC-Medium',color: Color(0xFFFFFFFF),fontSize: 12,fontWeight: FontWeight.w400),),
+                TextSpan(text: "$currentTime ",style: TextStyle(fontFamily:'PingFang SC-Medium',color: Color(0xDFF3673D),fontSize: 12,fontWeight: FontWeight.w400),),
+                TextSpan(text: "秒",style: TextStyle(fontFamily:'PingFang SC-Medium',color: Color(0xFFFFFFFF),fontSize: 12,fontWeight: FontWeight.w400),),
+              ]
+          ),
+          textDirection: TextDirection.ltr,
+        ),
+      ),
+
+
     );
   }
 

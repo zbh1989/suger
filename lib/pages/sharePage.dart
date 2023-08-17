@@ -150,7 +150,7 @@ class SharePageState extends BaseState<SharePage,SharePagePresenter>{
                 version: QrVersions.auto,
                 embeddedImage: logoIcon,
                 embeddedImageStyle: QrEmbeddedImageStyle(
-                  size: Size.square(30),
+                  size: Size.square(64),
                 ),
               ),
             ),

@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '彩虹视频',
+      title: '颜射视频',
       // color: Color(0xF703165E), // 0xF7050D2C
       theme: ThemeData(
         brightness: Brightness.dark,

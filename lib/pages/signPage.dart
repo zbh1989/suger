@@ -277,15 +277,15 @@ class SignPageState extends BaseState<SignPage,SignPagePresenter>{
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
 
-                SignItem(topTxt: '第1天',middleIcon: 'lib/assets/images/sign/golden.png',bottomTxt: '金币*38',isSelect: (checkNum??0) >= 1 ? true : false,),
+                SignItem(topTxt: '第1天',middleIcon: 'lib/assets/images/sign/golden.png',bottomTxt: '金币*18',isSelect: ((checkNum??0)%7 >= 1 || (checkNum??0)%7 == 0) ? true : false,),
 
-                SignItem(topTxt: '第2天',middleIcon: 'lib/assets/images/sign/watch_movie.png',bottomTxt: '观影券*2',isSelect: (checkNum??0) >= 2 ? true : false,),
-
-
-                SignItem(topTxt: '第3天',middleIcon: 'lib/assets/images/sign/vip.png',bottomTxt: 'VIP*1天',isSelect: (checkNum??0) >= 3 ? true : false,),
+                SignItem(topTxt: '第2天',middleIcon: 'lib/assets/images/sign/golden.png',bottomTxt: '金币*22',isSelect: ((checkNum??0)%7 >= 2 || (checkNum??0)%7 == 0) ? true : false,),
 
 
-                SignItem(topTxt: '第4天',middleIcon: 'lib/assets/images/sign/watch_movie.png',bottomTxt: '观影券*1',isSelect: (checkNum??0) >= 4 ? true : false,),
+                SignItem(topTxt: '第3天',middleIcon: 'lib/assets/images/sign/golden.png',bottomTxt: '金币*38',isSelect: ((checkNum??0)%7 >= 3 || (checkNum??0)%7 == 0) ? true : false,),
+
+
+                SignItem(topTxt: '第4天',middleIcon: 'lib/assets/images/sign/vip.png',bottomTxt: 'VIP*1',isSelect: ((checkNum??0)%7 >= 4 || (checkNum??0)%7 == 0) ? true : false,),
               ],
             ),
           ),
@@ -296,8 +296,8 @@ class SignPageState extends BaseState<SignPage,SignPagePresenter>{
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SignItem(topTxt: '第5天',middleIcon: 'lib/assets/images/sign/golden.png',bottomTxt: '金币*58',isSelect: (checkNum??0) >= 5 ? true : false,),
-                SignItem(topTxt: '第6天',middleIcon: 'lib/assets/images/sign/watch_movie.png',bottomTxt: 'VIP*1天',isSelect: (checkNum??0) >= 6 ? true : false,),
+                SignItem(topTxt: '第5天',middleIcon: 'lib/assets/images/sign/golden.png',bottomTxt: '金币*58',isSelect: ((checkNum??0)%7 >= 5 || (checkNum??0)%7 == 0) ? true : false,),
+                SignItem(topTxt: '第6天',middleIcon: 'lib/assets/images/sign/golden.png',bottomTxt: '金币*68',isSelect: ((checkNum??0)%7 >= 6 || (checkNum??0)%7 == 0) ? true : false,),
                 /// 第 7 天
                 Container(
                   child: Stack(
@@ -306,7 +306,7 @@ class SignPageState extends BaseState<SignPage,SignPagePresenter>{
                         width: size.width * 142 / 375 + 6,
                         height: (size.width * 142 / 375 + 6)*80/142,
                         decoration: BoxDecoration(
-                          color: (checkNum??0) >= 7 ? Color(0xFF6205B3) : Color(0xFF3A067E),
+                          color: (checkNum??0)%7 == 0 ? Color(0xFF6205B3) : Color(0xFF3A067E),
                           image: DecorationImage(
                             image: AssetImage('lib/assets/images/sign/gift_package.png'),
                             fit: BoxFit.fill, // 完全填充
