@@ -91,11 +91,12 @@ class RecordItem extends StatelessWidget {
         border: Border.all(width: 1),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('id : ' + data['id'].toString(),style: TextStyle(fontSize: 16,fontFamily: 'PingFang SC-Bold',fontWeight: FontWeight.w400,color: Color(0xFFAC5AFF)),),
-          SizedBox(width: 11.5,),
+          // SizedBox(width: 11.5,),
           Text('用户名 : ' + data['username'].toString(),style: TextStyle(fontSize: 16,fontFamily: 'PingFang SC-Bold',fontWeight: FontWeight.w400,color: Color(0xFFAC5AFF)),),
         ],
       ),
