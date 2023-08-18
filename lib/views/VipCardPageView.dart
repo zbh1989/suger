@@ -255,7 +255,7 @@ class VipCardItem extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            // color: Colors.green,
+            color: Colors.green,
             borderRadius: BorderRadius.circular(12),
           ),
           width: imgWidth,
@@ -266,6 +266,7 @@ class VipCardItem extends StatelessWidget {
           left: 0,
           top: 0,
           child: Container(
+            clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               // color: Colors.green,
               borderRadius: BorderRadius.circular(12),

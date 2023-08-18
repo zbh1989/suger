@@ -52,6 +52,7 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
   String version;
   int hasMsg;
   String endVipDate;
+  String username;
 
   @override
   void initState() {
@@ -92,11 +93,14 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
         userId = val;
       }),
 
-    PreferenceUtils.instance.getString("endVipDate").then((val){
-      if(mounted && val != null){
-        endVipDate = val;
-      }
-    }),
+      /// 用户名
+      PreferenceUtils.instance.getString("username").then((value) => username = value), // 用户名
+
+      PreferenceUtils.instance.getString("endVipDate").then((val){
+        if(mounted && val != null){
+          endVipDate = val;
+        }
+      }),
 
       PackageInfo.fromPlatform().then((val) {
         version = val.version.split('.')[2];//获取当前的版本号
@@ -165,7 +169,7 @@ class UserPageState extends BaseState<UserPage, UserPresenter> {
                 // mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('隔壁老王',style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold,fontFamily: 'PingFang SC-Bold',color: Color(0xFFFFFFFF)),),
+                  Text(username??'隔壁老王',style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold,fontFamily: 'PingFang SC-Bold',color: Color(0xFFFFFFFF)),),
                   SizedBox(height: 5),
                   Text('ID: $userId',style: TextStyle(fontSize: 12,fontWeight:FontWeight.w400,fontFamily: 'PingFang SC-Medium',color: Color(0x80FFFFFF)),),
                   SizedBox(height: vipStatus == 0 ? 0 : 5),

@@ -87,7 +87,7 @@ class SplashScreen extends StatefulWidget {
   SplashScreenState createState() => new SplashScreenState();
 }
 
-class SplashScreenState extends BaseState<SplashScreen,SplashScreenPresenter> {
+class SplashScreenState extends BaseState<SplashScreen,SplashScreenPresenter> /* with AutomaticKeepAliveClientMixin*/{
   Timer _timer;
 
   List dataList = [];
@@ -108,6 +108,28 @@ class SplashScreenState extends BaseState<SplashScreen,SplashScreenPresenter> {
     param['advoceMsg'] = advoceMsg;
     Navigator.of(context).pushReplacementNamed('/homePage',arguments: param);
   }
+
+  // Contact _contact = new Contact(fullName: "", phoneNumber: "");
+  /*final EasyContactPicker _contactPicker = new EasyContactPicker();
+
+  _openAddressBook() async{
+    // 申请权限
+    Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.contacts]);
+
+    // 申请结果
+    PermissionStatus permission = await PermissionHandler().checkPermissionStatus(PermissionGroup.contacts);
+
+    if (permission == PermissionStatus.granted){
+      _getContactData();
+    }
+  }
+
+  _getContactData() async{
+    Contact contact = await _contactPicker.selectContactWithNative();
+    setState(() {
+      _contact = contact;
+    });
+  }*/
 
   @override
   void initState() {

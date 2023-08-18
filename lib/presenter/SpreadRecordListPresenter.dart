@@ -15,7 +15,7 @@ class SpreadRecordListPresenter extends BasePresenter<SpreadRecordListPageState>
       PreferenceUtils.instance.getString("userId").then((val){
         if(val != null){
           Map<String, dynamic> param = Map();
-          param['userId'] = val[0];
+          param['userId'] = val;
           requestFutureData<String>(
               Method.post,
               url: Api.HOST_URL + Api.SUBORDINATE_USER,
