@@ -4,8 +4,8 @@
 
 class Api {
 
-  /// 渠道号，每次打包更新 按渠道号
-  static final String cno = 'C002';
+  /// 渠道号，每次打包更新 按渠道号 - 老杨
+  static final String cno = 'C001';
 
   /// 打包版本号.
   static const int appVersion = 19;
