@@ -118,7 +118,7 @@ class ChargeVipPagePresenter extends BasePresenter<ChargeVipPageState>{
     try{
       Map<String,dynamic> params = Map();
       params['amount'] = money.toString();
-      params['bizType'] = 2; /// 业务类型; 1: 会员等级充值; 2: 金币充值
+      params['bizType'] = 1; /// 业务类型; 1: 会员等级充值; 2: 金币充值
       params['clientIp'] = '';
       params['device'] = 1; /// 设备类型;1:Android; 2:IOS; 3: WEB; 4: 其他
       Map body = {'money':money};
