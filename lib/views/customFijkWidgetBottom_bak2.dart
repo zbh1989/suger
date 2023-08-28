@@ -308,7 +308,7 @@ class _CustomFijkWidgetBottomState extends State<CustomFijkWidgetBottom2 > {
           child: Column(
             children: [
               Text('充值VIP，观看完整视频邀请好友，领取免费VIP',softWrap: true,style: TextStyle(fontSize: 18,fontFamily: 'PingFang SC-Bold',fontWeight: FontWeight.bold,color: Color(0xFF7E3B0C),),),
-              Text('颜射视频',style: TextStyle(fontSize: 12,fontFamily: 'PingFang SC-Medium',fontWeight: FontWeight.w400,color: Color(0xFF7E3B0C),),),
+              Text('夜啪啪',style: TextStyle(fontSize: 12,fontFamily: 'PingFang SC-Medium',fontWeight: FontWeight.w400,color: Color(0xFF7E3B0C),),),
             ],
           ),
         ),

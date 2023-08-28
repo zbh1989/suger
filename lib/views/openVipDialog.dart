@@ -40,7 +40,7 @@ class OpenVipDialog extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.only(top: 6),
-                child: Text('颜射视频',style: TextStyle(fontSize: 12,fontFamily: 'PingFang SC-Medium',fontWeight: FontWeight.w400,color: Color(0xFF7E3B0C),decoration: TextDecoration.none,),),
+                child: Text('夜啪啪',style: TextStyle(fontSize: 12,fontFamily: 'PingFang SC-Medium',fontWeight: FontWeight.w400,color: Color(0xFF7E3B0C),decoration: TextDecoration.none,),),
               ),
             ],
           ),

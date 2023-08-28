@@ -121,9 +121,9 @@ class ChargeRecordItem extends StatelessWidget {
           Expanded(child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('颜射视频VIP',style: TextStyle(fontSize: 18,fontFamily: 'PingFang SC-Bold',fontWeight: FontWeight.w400,color: Color(0xFFF5DA89)),),
+              Text('夜啪啪VIP',style: TextStyle(fontSize: 18,fontFamily: 'PingFang SC-Bold',fontWeight: FontWeight.w400,color: Color(0xFFF5DA89)),),
               SizedBox(height: 16,),
-              Text('您已成功开通颜射视频VIP服务，续费类型：周卡会员，有效期至：2023-05-12。感谢您对我们的支持与信赖，因为有您，我们才能并肩走的更远！',softWrap: true,style: TextStyle(fontSize: 14,fontFamily: 'PingFang SC-Medium',fontWeight: FontWeight.w400,color: Color(0xFFFFFFFF)),),
+              Text('您已成功开通夜啪啪VIP服务，续费类型：周卡会员，有效期至：2023-05-12。感谢您对我们的支持与信赖，因为有您，我们才能并肩走的更远！',softWrap: true,style: TextStyle(fontSize: 14,fontFamily: 'PingFang SC-Medium',fontWeight: FontWeight.w400,color: Color(0xFFFFFFFF)),),
               SizedBox(height: 16,),
               Text('2023.05.1216:45',style: TextStyle(fontSize: 12,fontFamily: 'PingFang SC-Regular',fontWeight: FontWeight.w400,color: Color(0x80FFFFFF)),),
             ],

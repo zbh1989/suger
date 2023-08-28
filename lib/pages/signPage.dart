@@ -368,7 +368,7 @@ class SignPageState extends BaseState<SignPage,SignPagePresenter>{
         children: [
           Text('签到规则',style: TextStyle(fontSize: 18,fontFamily: 'PingFang SC-Bold',color: Color(0xFFFFFFFF),fontWeight: FontWeight.w400),),
           SizedBox(height: 18,),
-          Text('1.每天可签到1次\n2.最多可以连续签到7天，获得7天签到礼包所有奖励\n3.签到中间不可漏签，否则从第1天重新签到\n4.签到奖励数量展示为普通用户，某些奖励项VIP可获得双倍奖励\n5.最终解释权归颜射视频所有',style: TextStyle(fontSize: 14,fontFamily: 'PingFang SC-Regular',color: Color(0xFFFFFFFF),fontWeight: FontWeight.w400),),
+          Text('1.每天可签到1次\n2.最多可以连续签到7天，获得7天签到礼包所有奖励\n3.签到中间不可漏签，否则从第1天重新签到\n4.签到奖励数量展示为普通用户，某些奖励项VIP可获得双倍奖励\n5.最终解释权归夜啪啪所有',style: TextStyle(fontSize: 14,fontFamily: 'PingFang SC-Regular',color: Color(0xFFFFFFFF),fontWeight: FontWeight.w400),),
         ],
       ),
     );

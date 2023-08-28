@@ -134,7 +134,7 @@ class SharePageState extends BaseState<SharePage,SharePagePresenter>{
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('颜射视频',style: TextStyle(fontFamily: 'PingFang SC-Bold',fontSize: 32,color: Color(0xFFFFFFFF),fontWeight: FontWeight.bold),),
+          Text('夜啪啪',style: TextStyle(fontFamily: 'PingFang SC-Bold',fontSize: 32,color: Color(0xFFFFFFFF),fontWeight: FontWeight.bold),),
           Text('全球最大的原创真人视频平台',style: TextStyle(fontFamily: 'PingFang SC-Bold',fontSize: 16,color: Color(0xFFFFFFFF),fontWeight: FontWeight.w400),),
           RepaintBoundary(
             key: globalKey,

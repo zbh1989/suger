@@ -438,7 +438,7 @@ class NewFirstPageState extends BaseState<NewFirstPage,NewFirstPagePresenter>  w
           SizedBox(width: 12,),
 
           Container(
-            child: Text('颜射视频公告',style: TextStyle(fontSize: 16,fontFamily: 'PingFang SC-Bold',color: Color(0xFF000000),fontWeight: FontWeight.w400,decoration: TextDecoration.none,),),
+            child: Text('夜啪啪公告',style: TextStyle(fontSize: 16,fontFamily: 'PingFang SC-Bold',color: Color(0xFF000000),fontWeight: FontWeight.w400,decoration: TextDecoration.none,),),
           ),
         ],
       ),
